@@ -1,0 +1,607 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Valmed Kişilik Envanteri</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: tek sütun, sakin bir "form kâğıdı"; adayda soru kartları + ilerleme şeridi, İK'da rapor kâğıdı + aday listesi */
+:root{
+  --bg:#F4F7F6; --paper:#FFFFFF; --ink:#13262A; --muted:#58696C; --line:#DAE3E1;
+  --accent:#1C6A5E; --accent-ink:#0F4239; --accent-soft:#E0EFEB;
+  --good:#2E7A4A; --good-soft:#E3F2E8; --warn:#956210; --warn-soft:#FAF0DB; --bad:#A33A2F; --bad-soft:#F8E3E0;
+  --sans:"Lexend","Segoe UI",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1716; --paper:#14201F; --ink:#E3ECEA; --muted:#92A4A1; --line:#26363A;
+  --accent:#6DBEAE; --accent-ink:#BFE6DD; --accent-soft:#1A3430;
+  --good:#7CC796; --good-soft:#17301F; --warn:#E5B35F; --warn-soft:#33270E; --bad:#EE8A7E; --bad-soft:#3A1C19; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1716; --paper:#14201F; --ink:#E3ECEA; --muted:#92A4A1; --line:#26363A;
+  --accent:#6DBEAE; --accent-ink:#BFE6DD; --accent-soft:#1A3430;
+  --good:#7CC796; --good-soft:#17301F; --warn:#E5B35F; --warn-soft:#33270E; --bad:#EE8A7E; --bad-soft:#3A1C19; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;font-weight:300;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 64px}
+.wrap{max-width:820px;margin:0 auto;display:grid;gap:20px}
+h1,h2,h3{font-weight:500;line-height:1.2;margin:0;text-wrap:balance}
+h1{font-size:clamp(26px,4.5vw,36px);letter-spacing:-.01em}
+h2{font-size:21px} h3{font-size:17px}
+p{margin:0}
+.eyebrow{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.muted{color:var(--muted)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:24px;display:grid;gap:16px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:500}
+.mark{width:28px;height:28px;border-radius:8px;background:var(--accent);display:grid;place-items:center;color:var(--paper);font-size:14px;font-weight:600}
+.tabs{display:flex;gap:6px}
+button,a.btn{font:inherit;font-size:15px;font-weight:500;border-radius:10px;padding:11px 18px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--paper);text-decoration:none;display:inline-block;text-align:center}
+button.ghost{background:transparent;color:var(--accent)}
+button.small{padding:7px 12px;font-size:13px}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,a.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.opt:focus-within,.sopt:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+label.k{font-size:13px;font-weight:500}
+input[type=text],select,textarea{font:inherit;font-weight:400;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+select option{background:var(--paper);color:var(--ink)}
+textarea{font-family:var(--mono);font-size:13px;min-height:90px;resize:vertical}
+.field{display:grid;gap:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.fact{border-top:2px solid var(--accent);padding-top:8px}
+.fact b{display:block;font-weight:500;font-size:20px}
+.fact span{font-size:13px;color:var(--muted)}
+.consent{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:16px;font-size:14px;display:grid;gap:10px}
+.consent label{display:flex;gap:10px;align-items:flex-start;font-weight:400}
+.consent input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent)}
+.warnbox{background:var(--warn-soft);color:var(--warn);border-radius:12px;padding:16px;font-size:14px;display:grid;gap:8px}
+.err{color:var(--bad);font-size:13px;min-height:18px}
+.progress{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;display:grid;gap:6px}
+.track{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.track i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.ptext{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.q{display:grid;gap:12px;padding-block:18px;border-bottom:1px solid var(--line)}
+.q:last-child{border-bottom:0}
+.qt{font-size:17px;font-weight:400;display:flex;gap:12px}
+.qn{font-family:var(--mono);font-size:13px;color:var(--muted);min-width:30px;padding-top:3px}
+.opts{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding-left:42px}
+.opt,.sopt{position:relative}
+.opt input,.sopt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.opt span{display:grid;place-items:center;text-align:center;min-height:52px;padding:6px;border:1px solid var(--line);border-radius:10px;font-size:12.5px;line-height:1.25;font-weight:400;color:var(--muted);transition:background .15s,border-color .15s}
+.sopts{display:grid;gap:8px;padding-left:42px}
+.sopt span{display:block;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-weight:400;transition:background .15s,border-color .15s}
+.opt:hover span,.sopt:hover span{border-color:var(--accent)}
+.opt input:checked + span,.sopt input:checked + span{background:var(--accent);border-color:var(--accent);color:var(--paper);font-weight:500}
+.q.missing .qt{color:var(--bad)}
+.nav{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.codebox{font-family:var(--mono);font-size:13px;word-break:break-all;background:var(--bg);border:1px dashed var(--accent);border-radius:10px;padding:14px;user-select:all}
+details summary{cursor:pointer;color:var(--muted);font-size:14px}
+details[open] summary{margin-bottom:10px}
+.toast{font-size:13px;color:var(--good);min-height:18px}
+.rhead{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.chip{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12.5px;font-weight:500;white-space:nowrap}
+.chip.hi{background:var(--accent-soft);color:var(--accent-ink)}
+.chip.mid{background:var(--line);color:var(--ink)}
+.chip.lo{background:var(--warn-soft);color:var(--warn)}
+.chip.good{background:var(--good-soft);color:var(--good)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.bad{background:var(--bad-soft);color:var(--bad)}
+.example{background:var(--warn-soft);color:var(--warn);border-radius:10px;padding:10px 14px;font-size:14px;font-weight:500}
+.dom{display:grid;gap:10px;padding-block:16px;border-top:1px solid var(--line)}
+.domtop{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.bar{height:10px;border-radius:5px;background:var(--line);position:relative;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--accent);border-radius:5px}
+.scale{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted)}
+.facets{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px}
+.fac{display:grid;grid-template-columns:minmax(0,1fr) 90px 30px;gap:10px;align-items:center;font-size:13.5px}
+.fac .bar{height:6px}
+.fac b{font-family:var(--mono);font-weight:400;font-size:12px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.fits{display:grid;gap:8px}
+.fit{display:grid;grid-template-columns:minmax(0,1fr) 140px 44px;gap:12px;align-items:center;font-size:14px}
+.fit.me{font-weight:500}
+.fit b{font-family:var(--mono);font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+.scnr{display:grid;gap:6px;padding-block:12px;border-top:1px solid var(--line);font-size:14.5px}
+.scnr .ans{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+ul.clean{margin:0;padding-left:18px;display:grid;gap:6px}
+ol.probes{margin:0;padding-left:20px;display:grid;gap:8px}
+ol.probes small{display:block;color:var(--muted);font-size:12.5px}
+.roles{display:flex;flex-wrap:wrap;gap:8px}
+.roles label{display:flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13.5px;font-weight:400;cursor:pointer}
+.roles input{accent-color:var(--accent)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line)}
+th{font-weight:500;font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.tablewrap{overflow-x:auto}
+.note{font-size:13px;color:var(--muted)}
+footer{font-size:12.5px;color:var(--muted);text-align:center}
+footer a{color:var(--accent)}
+@media (max-width:640px){.grid2,.facts,.facets{grid-template-columns:1fr}.opts{grid-template-columns:1fr;padding-left:0}.sopts{padding-left:0}.opt span{min-height:40px;justify-items:start;text-align:left;padding-inline:14px}.fit{grid-template-columns:minmax(0,1fr) 80px 40px}.card{padding:18px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><div class="mark" aria-hidden="true">V</div><span>Valmed Pharma · İnsan Kaynakları</span></div>
+    <div class="tabs" id="tabs" hidden>
+      <button class="small" id="t-ik" type="button">İK paneli</button>
+      <button class="small ghost" id="t-aday" type="button">Aday görünümü</button>
+    </div>
+  </div>
+
+  <section id="v-intro" class="card">
+    <div class="eyebrow">İşe alım süreci</div>
+    <h1>Kişilik Envanteri</h1>
+    <p>Bu envanter, çalışma tarzınızı ve iş değerlerinizi daha iyi tanımamız için hazırlandı. Doğru ya da yanlış cevap yoktur. Her ifadenin sizi bugün ne kadar iyi anlattığını işaretlemeniz yeterli. Son bölümde iş hayatından 4 kısa durum yer alıyor.</p>
+    <div class="facts">
+      <div class="fact"><b>70 + 4</b><span>kısa ifade ve iş durumu</span></div>
+      <div class="fact"><b>10–12 dk</b><span>ortalama süre</span></div>
+      <div class="fact"><b>8 sayfa</b><span>sonunda tek tıkla gönderim</span></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label class="k" for="c-name">Adınız ve soyadınız</label><input type="text" id="c-name" autocomplete="name" placeholder="Örn. Ayşe Demir"></div>
+      <div class="field"><label class="k" for="c-pos">Başvurduğunuz pozisyon</label><select id="c-pos"></select></div>
+    </div>
+    <div class="consent">
+      <b>Kişisel verileriniz hakkında</b>
+      <p>Cevaplarınız yalnızca Valmed Pharma İnsan Kaynakları tarafından, başvurunuzun değerlendirilmesi amacıyla kullanılır. Sonuç tek başına işe alım kararı değildir; mülakatta konuşulacak konuları belirlemeye yardımcı olur. Bu envanter sağlık veya klinik bir değerlendirme değildir.</p>
+      <label><input type="checkbox" id="c-ok"><span>Bilgilendirmeyi okudum; cevaplarımın bu amaçla değerlendirilmesini kabul ediyorum.</span></label>
+    </div>
+    <p class="err" id="e-intro" role="alert"></p>
+    <div class="nav"><span class="note">Yarıda bırakırsanız aynı cihazdan kaldığınız yerden devam edebilirsiniz.</span><button id="b-start" type="button">Envantere başla</button></div>
+  </section>
+
+  <section id="v-test" hidden>
+    <div class="progress"><div class="ptext"><span id="p-page">Sayfa 1 / 8</span><span id="p-count">0 / 74 cevaplandı</span></div><div class="track"><i id="p-bar" style="width:0%"></i></div></div>
+    <div class="card">
+      <p class="note" id="p-help">Her ifade için sizi en iyi anlatan seçeneği işaretleyin. İlk aklınıza gelen cevap genellikle en doğrusudur.</p>
+      <div id="qs"></div>
+      <p class="err" id="e-test" role="alert"></p>
+      <div class="nav"><button class="ghost" id="b-prev" type="button">Geri</button><button id="b-next" type="button">İleri</button></div>
+    </div>
+  </section>
+
+  <section id="v-done" class="card" hidden>
+    <div class="eyebrow">Son adım</div>
+    <h1 id="d-title">Cevaplarınızı gönderin</h1>
+    <div id="d-form" hidden style="display:grid;gap:14px">
+      <p>Aşağıdaki düğmeye bastığınızda cevaplarınızın hazır olarak doldurulduğu bir gönderim sayfası açılır. O sayfada yalnızca <b style="font-weight:500">Gönder</b> düğmesine basmanız yeterli; başka bir şey doldurmanız gerekmez.</p>
+      <div><a class="btn" id="d-link" href="#" target="_blank" rel="noopener">Cevaplarımı gönder</a></div>
+      <p class="note">Gönder'e bastıktan sonra işlem tamamlanır; bu sayfayı kapatabilirsiniz. Teşekkür ederiz.</p>
+      <details><summary>Gönderim sayfası açılmazsa</summary><p class="note" style="margin-bottom:10px">Aşağıdaki kodu kopyalayıp bu bağlantıyı aldığınız e-postaya yanıt olarak gönderin.</p><div class="codebox" id="d-code2"></div></details>
+    </div>
+    <div id="d-codeonly" hidden style="display:grid;gap:14px">
+      <p>Envanteri tamamladınız. Aşağıdaki sonuç kodunu kopyalayın ve bu bağlantıyı aldığınız e-postaya yanıt olarak İnsan Kaynakları'na gönderin.</p>
+      <div class="codebox" id="d-code"></div>
+      <div class="nav"><span class="toast" id="d-toast" role="status"></span><button id="b-copycode" type="button">Kodu kopyala</button></div>
+    </div>
+  </section>
+
+  <section id="v-ik" hidden>
+    <div class="wrap" style="gap:20px">
+      <div class="card">
+        <div class="eyebrow">İK paneli · yalnızca sizin görebildiğiniz bölüm</div>
+        <h2>Gelen sonuçları rapora dönüştürün</h2>
+        <div class="field"><label class="k" for="i-code">Sonuç kodları</label><textarea id="i-code" placeholder="Google E-Tablo'daki kod sütununu ya da adaydan gelen kodu buraya yapıştırın. Birden fazla kodu aynı anda yapıştırabilirsiniz."></textarea></div>
+        <p class="err" id="e-ik" role="alert"></p>
+        <div class="nav"><button class="ghost" id="b-sample" type="button">Örnek raporu göster</button><button id="b-report" type="button">Kodları oku</button></div>
+        <div id="batch"></div>
+      </div>
+      <div id="report"></div>
+      <div class="card" id="list-card">
+        <h2>Kaydedilen adaylar</h2>
+        <div id="list"><p class="note">Kaydedilen aday raporları burada listelenir. Bir raporu oluşturduktan sonra "Aday listesine kaydet" ile ekleyebilirsiniz.</p></div>
+      </div>
+      <div class="card" id="roles-card">
+        <h2>Şu an açık pozisyonlar</h2>
+        <p class="note">Seçtiğiniz pozisyonlar her raporda "Açık pozisyonlarla örtüşme" bölümünde gösterilir.</p>
+        <div class="roles" id="roles"></div>
+        <span class="toast" id="roles-toast" role="status"></span>
+      </div>
+    </div>
+  </section>
+
+  <footer>Kişilik ifadeleri, kamuya açık <a href="https://ipip.ori.org" target="_blank" rel="noopener">IPIP</a> soru havuzundaki IPIP-NEO-120 envanterinden seçilmiş 60 ifadelik kısa bir formdur; Türkçe çeviri <a href="https://github.com/rubynor/bigfive-web" target="_blank" rel="noopener">bigfive-web</a> (MIT lisansı) çevirisi temel alınarak düzeltilmiştir. İş etiği bölümü Valmed Pharma İK tarafından hazırlanmıştır.</footer>
+</div>
+
+<script>
+/* ---------- ayar: Google Form önceden doldurulmuş bağlantısı (değerler AD ve KOD olmalı) ---------- */
+const FORM_LINK = "https://docs.google.com/forms/d/e/1FAIpQLScsTccQbGSRJzSzv1UYNzluGt62BbRY_MN_8aDeGqvreJA_DQ/viewform?usp=pp_url&entry.1129462381=AD&entry.1578460225=KOD";
+
+const Q = [["Pek çok şey hakkında endişelenirim.",1,"N",1],["Kolay arkadaş edinirim.",1,"E",1],["Canlı bir hayal gücüm vardır.",1,"O",1],["Görevlerimi başarıyla tamamlarım.",1,"C",1],["Çabuk sinirlenirim.",1,"N",2],["Kalabalık toplantıları severim.",1,"E",2],["Başkalarını kendi çıkarım için kullanırım.",0,"A",2],["Ortalığı toplamayı severim.",1,"C",2],["Sık sık kendimi hüzünlü hissederim.",1,"N",3],["Sorumluluğu üstlenip işleri yönlendiririm.",1,"E",3],["Duygularımı yoğun yaşarım.",1,"O",3],["Başkalarına yardım etmeyi severim.",1,"A",3],["Sözümü tutarım.",1,"C",3],["İnsanlara yaklaşmakta zorlanırım.",1,"N",4],["Her zaman bir işle meşgulümdür.",1,"E",4],["Farklılığı rutine tercih ederim.",1,"O",4],["Tartışıp çekişmekten hoşlanırım.",0,"A",4],["Çok çalışırım.",1,"C",4],["Bazen kendimi tutamayıp aşırıya kaçarım.",1,"N",5],["Heyecan veren şeyleri severim.",1,"E",5],["Zihnimi zorlayan metinleri okumayı severim.",1,"O",5],["Başkalarından daha iyi olduğuma inanırım.",0,"A",5],["Her zaman hazırlıklıyımdır.",1,"C",5],["Çabuk paniğe kapılırım.",1,"N",6],["Etrafıma neşe saçarım.",1,"E",6],["Düşünmeden işe atılırım.",0,"C",6],["İnsanların iyi niyetli olduğuna inanırım.",1,"A",1],["Başkalarının fark etmediği güzellikleri görürüm.",1,"O",2],["Öne geçmek için hile yaparım.",0,"A",2],["Eşyaları yerine koymayı sık sık unuturum.",0,"C",2],["Doğruyu söylerim.",1,"C",3],["İnsanlara bağırırım.",0,"A",4],["Macera ararım.",1,"E",5],["Benden kötü durumda olanlara karşı merhamet duyarım.",1,"A",6],["Aceleyle karar veririm.",0,"C",6],["Şiirden hoşlanmam.",0,"O",2],["Duygusal tepkilerimi pek fark etmem.",0,"O",3],["Başkalarının duyguları bana pek önemli gelmez.",0,"A",3],["Kuralları çiğnerim.",0,"C",3],["Değişiklikten hoşlanmam.",0,"O",4],["Ancak idare edecek kadar çalışırım.",0,"C",4],["Soyut fikirleri anlamakta zorlanırım.",0,"O",5],["Her şeyi aceleye getiririm.",0,"C",6],["Kolayca strese girerim.",1,"N",1],["İnsanlarla aramda mesafe bırakırım.",0,"E",1],["Düşüncelere dalmayı severim.",1,"O",1],["İnsanlara güvenmem.",0,"A",1],["İşleri nasıl halledeceğimi bilirim.",1,"C",1],["Kolay kolay kızmam.",0,"N",2],["Kalabalıklardan kaçınırım.",0,"E",2],["Kendimle barışığım.",0,"N",3],["Yol göstermesi için başkalarını beklerim.",0,"E",3],["Zor sosyal ortamlar beni rahatsız etmez.",0,"N",4],["İşleri ağırdan almayı severim.",0,"E",4],["İsteklerimi kontrol edebilirim.",0,"N",5],["Yeteneklerimle övünürüm.",0,"A",5],["İşlere başlamakta zorlanırım.",0,"C",5],["Baskı altında sakin kalırım.",0,"N",6],["Hayatın iyi yanlarını görürüm.",1,"E",6],["İhtiyaç sahiplerini düşünmemeye çalışırım.",0,"A",6]];
+const ETH = [
+ ["Kimse görmese bile kurallara uyarım.",1,"K"],
+ ["Bir işi yetiştirmek için kayıtlarda küçük düzeltmeler yapmanın zararı olmaz.",0,"R"],
+ ["Hata yaptığımda bunu hemen yöneticime söylerim.",1,"H"],
+ ["Bir iş arkadaşımın hatasını görmezden gelmek bazen en iyisidir.",0,"H"],
+ ["İş yerinden küçük şeyleri izin almadan almak önemli değildir.",0,"D"],
+ ["Tedarikçiden ya da müşteriden gelen bir hediyeyi şirkete bildiririm.",1,"C"],
+ ["Sonuç iyi olacaksa bir kuralı esnetmek kabul edilebilir.",0,"K"],
+ ["Bilmediğim bir konuda biliyormuş gibi davranmam.",1,"D"],
+ ["Kendi çıkarım için bir bilgiyi olduğundan farklı gösterdiğim olur.",0,"D"],
+ ["Şirkete ait bilgileri dışarıyla paylaşmamaya özen gösteririm.",1,"C"]
+];
+const ETHG = {K:"Kurallara bağlılık",R:"Kayıt doğruluğu",H:"Hatayı bildirme",D:"Dürüstlük",C:"Çıkar çatışması ve gizlilik"};
+const SCN = [
+ {t:"Üretim alanında bir iş arkadaşınızın bonesini ve maskesini takmadan hatta girdiğini görüyorsunuz. Ortam yoğun ve kimse fark etmemiş.",
+  o:[["Hemen uyarırım; düzeltmezse sorumluya bildiririm.",3],["Mola sırasında kendisiyle konuşurum.",1],["Bu benim görevim değil, karışmam.",0],["Kendisine bir şey demeden sorumluya bildiririm.",2]], k:"Hijyen kuralı ihlali"},
+ {t:"Vardiya sonunda bir kontrol kaydını doldurmayı unuttuğunuzu fark ediyorsunuz. Ölçümü yapmıştınız ama değeri not etmemiştiniz.",
+  o:[["Hatırladığım değeri yazıp kaydı tamamlarım.",0],["Durumu sorumluya bildirir, kaydın eksik kaldığını belirtirim.",3],["Bir sonraki ölçümün değerini o saate de yazarım.",0],["Kimse sormazsa boş bırakırım.",1]], k:"Eksik kayıt"},
+ {t:"Birlikte çalıştığınız bir tedarikçi, yeni sipariş görüşmesinden önce size değerli bir hediye göndermek istiyor.",
+  o:[["Kabul ederim; bu sektörde normaldir.",0],["Nazikçe reddeder, yöneticimi bilgilendiririm.",3],["Kabul ederim ama siparişi etkilemesine izin vermem.",1],["Önce şirketin kuralını sorar, ona göre davranırım.",2]], k:"Tedarikçi hediyesi"},
+ {t:"Yönetime sunulmuş bir raporunuzda sonradan önemli bir hesap hatası fark ediyorsunuz.",
+  o:[["Hemen yöneticime bildirir, düzeltilmiş raporu gönderirim.",3],["Bir sonraki raporda sessizce düzeltirim.",1],["Kimse fark etmediyse bir şey yapmam.",0],["Önce hatanın etkisini araştırır, sonra gerekirse bildiririm.",2]], k:"Rapordaki hata"}
+];
+const SCNV = [["bad","Riskli"],["warn","Zayıf"],["mid","Kabul edilebilir"],["good","Önerilen davranış"]];
+const ETH_PROBE = [
+ ["K","Bir kuralı esnetmeniz için baskı hissettiğiniz bir durumu anlatın. Ne yaptınız?"],
+ ["R","Bir kaydın ya da raporun eksik veya hatalı olduğunu fark ettiğiniz bir durumu anlatın."],
+ ["H","Kendi yaptığınız bir hatayı bildirmeniz gereken bir durumu anlatın. Nasıl ele aldınız?"],
+ ["D","Dürüst olmanın size kısa vadede zarar verebileceği bir durumda nasıl davrandığınızı anlatın."],
+ ["C","Kişisel bir çıkarla iş sorumluluğunuzun çatıştığı bir durumu nasıl yönettiğinizi anlatın."]
+];
+const NL = Q.length, NE = ETH.length, NA = NL + NE, NS = SCN.length;
+const ITEMS = Q.map(q=>[q[0]]).concat(ETH.map(e=>[e[0]]));
+const LIKERT_PAGES = Math.ceil(NA/10), LAST = LIKERT_PAGES;
+const CHOICES = ["Çok yanlış","Orta derecede yanlış","Ne doğru ne yanlış","Orta derecede doğru","Çok doğru"];
+const DOM = {
+  N:{name:"Duygusal Hassasiyet", lo:"Baskı altında sakin kalır, olumsuz olaylardan çabuk toparlanır.", mid:"Çoğu durumda dengelidir; yoğun stres dönemlerinde gerginlik yaşayabilir.", hi:"Stres, belirsizlik ve eleştiriye karşı hassastır; destekleyici ve öngörülebilir bir ortamda daha iyi çalışır.", ends:["Sakin, dengeli","Hassas, tepkisel"]},
+  E:{name:"Dışadönüklük", lo:"Sakin çalışır, bireysel işleri ve az sayıda kişiyle derin ilişkiyi tercih eder.", mid:"Ortama göre hem bireysel hem ekip içinde rahat çalışır.", hi:"Enerjik ve konuşkandır, insanlarla temastan beslenir; öne çıkmaktan çekinmez.", ends:["İçe dönük","Dışa dönük"]},
+  O:{name:"Deneyime Açıklık", lo:"Bilinen ve kanıtlanmış yöntemleri, somut işleri tercih eder; rutine iyi uyum sağlar.", mid:"Yeni fikirlere açıktır ama pratik faydaya bakar.", hi:"Meraklı ve yaratıcıdır, yeni yöntemler denemeye isteklidir; tekdüze işlerde sıkılabilir.", ends:["Geleneksel","Yeniliğe açık"]},
+  A:{name:"Uyumluluk", lo:"Doğrudan, rekabetçi ve eleştirel bakabilir; zor kararlar ve pazarlıkta rahattır.", mid:"İş birliğine açıktır, gerektiğinde kendi görüşünü savunur.", hi:"Yardımsever, güvenen ve uyumlu çalışır; çatışmadan kaçınma eğiliminde olabilir.", ends:["Rekabetçi","Uyumlu"]},
+  C:{name:"Sorumluluk", lo:"Esnek ve kendiliğinden çalışır; plan, takip ve ayrıntıda desteğe ihtiyaç duyabilir.", mid:"Genellikle düzenli ve sorumludur; önceliklere göre esneyebilir.", hi:"Planlı, düzenli, güvenilir ve hedef odaklıdır; kurallara ve kayıtlara özen gösterir.", ends:["Esnek","Planlı, disiplinli"]}
+};
+const ORDER = ["C","N","E","A","O"];
+const FAC = {
+  N1:["Kaygı","Endişe ve gerginliğe yatkınlık"], N2:["Öfke","Sinirlenme ve kızgınlık eğilimi"], N3:["Karamsarlık","Hüzün ve umutsuzluğa yatkınlık"], N4:["Çekingenlik","Başkaları önünde mahcubiyet hissi"], N5:["Dürtüsellik","İsteklere karşı koymakta zorlanma"], N6:["Kırılganlık","Baskı altında dağılma eğilimi"],
+  E1:["Sıcaklık","İnsanlara samimi ve yakın davranma"], E2:["Sosyallik","Kalabalık ve sosyal ortam tercihi"], E3:["Girişkenlik","Öne çıkma, söz alma, yönlendirme"], E4:["Enerji","Tempolu ve hareketli çalışma"], E5:["Heyecan arayışı","Uyarım ve yenilik arama"], E6:["Neşe","Olumlu duygu ve coşku"],
+  O1:["Hayal gücü","Zihinde canlandırma ve fikir üretme"], O2:["Estetik ilgi","Sanata ve güzelliğe ilgi"], O3:["Duygusal farkındalık","Kendi duygularını fark etme"], O4:["Değişime açıklık","Yeni deneyim ve ortam arama"], O5:["Entelektüel merak","Soyut ve karmaşık konulara ilgi"], O6:["Sorgulayıcılık","Gelenek ve otoriteyi sorgulama"],
+  A1:["Güven","Başkalarının iyi niyetine güvenme"], A2:["Dürüstlük","Açık sözlü ve kurala uygun davranma"], A3:["Yardımseverlik","Başkalarına yardım etmekten hoşlanma"], A4:["İş birliği","Çatışma yerine uzlaşmayı seçme"], A5:["Alçakgönüllülük","Kendini öne çıkarmama"], A6:["Duyarlılık","Başkalarının durumuna duyarlılık"],
+  C1:["Öz yeterlilik","İşleri başarabileceğine güvenme"], C2:["Düzenlilik","Düzen, plan ve listelerle çalışma"], C3:["Sorumluluk bilinci","Kurallara ve verilen söze bağlılık"], C4:["Başarı odaklılık","Hedef koyma ve çok çalışma"], C5:["Öz disiplin","Sıkıcı işi de sonuna kadar götürme"], C6:["Temkinlilik","Karar vermeden önce düşünme"]
+};
+const PROBE = {
+  C1:"Size yeni ve zor bir görev verildiğinde nasıl ilerlediğinizi bir örnekle anlatır mısınız?",
+  C2:"Çalışma alanınızı veya kayıtlarınızı düzenli tutmak için kullandığınız bir yöntemi anlatın.",
+  C3:"Kimse kontrol etmediği halde bir kurala veya prosedüre uyduğunuz bir durumu anlatın.",
+  C4:"Kendinize koyduğunuz bir hedefe ulaşmak için fazladan çaba gösterdiğiniz bir örnek verin.",
+  C5:"Sıkıcı ama gerekli bir işi sonuna kadar götürdüğünüz bir durumu anlatın.",
+  C6:"Acele etmek yerine durup kontrol ettiğiniz ve bunun bir hatayı önlediği bir örnek verin.",
+  N1:"Yoğun baskı ve zaman sıkışıklığında çalıştığınız bir günü anlatın. Nasıl yönettiniz?",
+  N2:"Bir iş arkadaşınızın sizi sinirlendirdiği bir durumu nasıl ele aldığınızı anlatın.",
+  N3:"Moralinizi bozan bir iş olayından sonra nasıl toparlandığınızı anlatın.",
+  N4:"Tanımadığınız kişilerin önünde konuşmanız gereken bir durumu anlatın.",
+  N5:"Planladığınızdan farklı davranıp sonradan pişman olduğunuz bir iş kararını anlatın.",
+  N6:"Beklenmedik bir kriz anında ilk ne yaptığınızı anlatın.",
+  E1:"Yeni bir ekibe girdiğinizde insanlarla nasıl ilişki kurduğunuzu anlatın.",
+  E2:"Gün boyu çok sayıda insanla iletişim kurmanız gereken bir dönemi anlatın.",
+  E3:"Bir toplantıda görüşünüzü savunmanız ya da bir kararı yönlendirmeniz gereken bir durumu anlatın.",
+  E4:"Aynı gün içinde çok sayıda işi hızla bitirmeniz gereken bir dönemi anlatın.",
+  E5:"Uzun süre tekrar eden, rutin bir işte çalıştığınız bir dönemi nasıl geçirdiğinizi anlatın.",
+  E6:"Ekip moralinin düştüğü bir dönemde ne yaptığınızı anlatın.",
+  O1:"Bir soruna alışılmış yöntemlerin dışında çözüm ürettiğiniz bir örnek verin.",
+  O2:"Bir ürünün ya da içeriğin görsel tarafına katkı sağladığınız bir örnek verin.",
+  O3:"Bir müşterinin veya iş arkadaşınızın duygusunu anlamanın işinize yaradığı bir durumu anlatın.",
+  O4:"Yeni bir ülkeye, kültüre ya da tamamen yeni bir işe uyum sağladığınız bir dönemi anlatın.",
+  O5:"Bilmediğiniz teknik bir konuyu kısa sürede öğrenmeniz gereken bir durumu anlatın.",
+  O6:"Mevcut bir uygulamayı sorgulayıp değiştirilmesini önerdiğiniz bir örnek verin.",
+  A1:"Bir iş arkadaşınıza güvenip bir işi devrettiğiniz bir durumu anlatın; sonuç ne oldu?",
+  A2:"Bir hatayı veya olumsuz bir sonucu dürüstçe bildirmeniz gereken bir durumu anlatın.",
+  A3:"Görevinizin dışında bir iş arkadaşınıza yardım ettiğiniz bir örnek verin.",
+  A4:"Biriyle ciddi bir görüş ayrılığı yaşayıp ortak bir noktada buluştuğunuz bir durumu anlatın.",
+  A5:"Bir başarınızda ekibin payını nasıl paylaştığınızı anlatın.",
+  A6:"Zor durumdaki bir müşteri ya da çalışanla nasıl ilgilendiğinizi anlatın."
+};
+const POS = {
+  uretim:{n:"Üretim Operatörü", d:{C:["H",3],N:["L",2],A:["M",1]}, f:{C3:"H",C5:"H",C6:"H",A4:"H",E5:"L"}},
+  depo:{n:"Depo ve Lojistik Personeli", d:{C:["H",3],N:["L",2]}, f:{C2:"H",C6:"H",E4:"H",A4:"H"}},
+  proses:{n:"Proses Kontrol Elemanı", d:{C:["H",3],N:["L",2]}, f:{C2:"H",C3:"H",C6:"H",A2:"H"}},
+  kalite:{n:"Kalite Kontrol / Kalite Güvence Uzmanı", d:{C:["H",3],N:["L",2],O:["M",1]}, f:{C2:"H",C6:"H",O5:"H",A2:"H",E3:"M"}},
+  kalitesor:{n:"Kalite Sorumlusu", d:{C:["H",3],N:["L",2],E:["M",1]}, f:{C2:"H",C6:"H",E3:"H",A2:"H",O5:"H"}},
+  mikro:{n:"Mikrobiyolog / Laborant", d:{C:["H",3],N:["L",2]}, f:{C2:"H",C5:"H",C6:"H",O5:"H"}},
+  ruhsat:{n:"Ruhsatlandırma Uzmanı", d:{C:["H",3],O:["M",1],N:["L",1]}, f:{C2:"H",C3:"H",C6:"H",O5:"H"}},
+  satis:{n:"İhracat Satış Uzmanı", d:{E:["H",3],N:["L",2],C:["M",1]}, f:{E1:"H",E3:"H",E4:"H",C4:"H",O4:"H"}},
+  lider:{n:"Takım Lideri / Yönetici", d:{E:["H",2],C:["H",2],N:["L",3],A:["M",1]}, f:{E3:"H",C1:"H",C4:"H",A2:"H"}},
+  satinalma:{n:"Satın Alma Uzmanı", d:{C:["H",3],N:["L",2],A:["M",1]}, f:{C2:"H",C6:"H",E3:"H",A2:"H"}},
+  fiyat:{n:"Fiyatlandırma ve Raporlama Uzmanı", d:{C:["H",3],N:["L",1],O:["M",1]}, f:{C2:"H",C6:"H",O5:"H",A2:"H"}},
+  finans:{n:"Finans ve Muhasebe Uzmanı", d:{C:["H",3],N:["L",2]}, f:{C2:"H",C3:"H",C6:"H",A2:"H"}},
+  pazarlama:{n:"Pazarlama ve E-ticaret Uzmanı", d:{O:["H",3],E:["M",1],C:["M",1]}, f:{O1:"H",O2:"H",C4:"H",E3:"M"}},
+  ik:{n:"İnsan Kaynakları Uzmanı", d:{A:["H",2],E:["M",1],C:["H",2],N:["L",2]}, f:{A2:"H",A6:"H",E1:"H",C3:"H"}}
+};
+const TGT = {H:"yüksek",L:"düşük",M:"orta"};
+
+/* ---------- puanlama ---------- */
+function score(ans){
+  const dom={},fac={},dn={},fn={};
+  Q.forEach((q,i)=>{const v=ans[i];const s=q[1]?v:6-v;const k=q[2]+q[3];dom[q[2]]=(dom[q[2]]||0)+s;fac[k]=(fac[k]||0)+s;dn[q[2]]=(dn[q[2]]||0)+1;fn[k]=(fn[k]||0)+1;});
+  const dp={},fp={};
+  for(const d of ORDER) dp[d]=Math.round((dom[d]-dn[d])/(4*dn[d])*100);
+  for(const k in fac) fp[k]=Math.round((fac[k]-fn[k])/(4*fn[k])*100);
+  return {dp,fp};
+}
+function ethics(ans,scn){
+  let sum=0;const risk=[],grp={};
+  ETH.forEach((e,j)=>{const v=ans[NL+j];const s=e[1]?v:6-v;sum+=s;(grp[e[2]]=grp[e[2]]||[]).push(s);if(s<=2)risk.push({t:e[0],v,g:e[2]});});
+  const pct=Math.round((sum-NE)/(4*NE)*100);
+  const sc=scn.map((c,i)=>c>=0?SCN[i].o[c][1]:null);
+  const sv=sc.filter(x=>x!=null);const spct=sv.length?Math.round(sv.reduce((a,b)=>a+b,0)/(3*sv.length)*100):null;
+  const ideal=ETH.every((e,j)=>{const v=ans[NL+j];return e[1]?v===5:v===1});
+  const weakG=Object.keys(ETHG).filter(g=>grp[g]&&Math.min(...grp[g])<=2||sc.some((x,i)=>x!=null&&x<=1&&scnGroup(i)===g));
+  return {pct,risk,sc,spct,ideal,weakG};
+}
+function scnGroup(i){return ["K","R","C","H"][i]}
+function level(p){return p<35?"lo":p>65?"hi":"mid"}
+const LV={lo:"Düşük",mid:"Orta",hi:"Yüksek"};
+function pen(t,p){return t==="H"?Math.max(0,65-p):t==="L"?Math.max(0,p-35):Math.max(0,Math.abs(p-50)-15)}
+function fitFor(key,s){
+  const P=POS[key];let sw=0,sp=0;const items=[];
+  for(const d in P.d){const [t,w]=P.d[d];const x=pen(t,s.dp[d]);sw+=w;sp+=w*x;items.push({k:d,t,p:s.dp[d],x,dom:true});}
+  for(const f in P.f){if(!(f in s.fp))continue;const t=P.f[f];const x=pen(t,s.fp[f]);sw+=1;sp+=x;items.push({k:f,t,p:s.fp[f],x,dom:false});}
+  return {fit:Math.max(0,Math.min(100,Math.round(100-100*sp/(sw*40)))),items};
+}
+function fitChip(v){return v>=75?["good","Yüksek örtüşme"]:v>=55?["warn","Kısmi örtüşme"]:["bad","Düşük örtüşme"]}
+function ethChip(e){const v=Math.min(e.pct,e.spct==null?100:e.spct);return v>=75&&!e.risk.length?["good","Güçlü"]:v>=55?["warn","Sorgulanmalı"]:["bad","Riskli"]}
+function validity(ans,dur){
+  const a=ans.slice(0,NL);const w=[];const c=[0,0,0,0,0,0];a.forEach(v=>c[v]++);const mx=Math.max(...c.slice(1));
+  if(mx/NL>=0.6)w.push("Cevapların %"+Math.round(mx/NL*100)+"'i aynı seçenekte. Aday ifadeleri yeterince ayırt etmemiş olabilir.");
+  if(c[3]/NL>=0.45)w.push("Cevapların %"+Math.round(c[3]/NL*100)+"'i \"Ne doğru ne yanlış\". Sonuçlar olduğundan daha orta görünebilir.");
+  if(dur&&dur<180)w.push("Envanter "+Math.max(1,Math.round(dur/60))+" dakikada tamamlanmış. 74 soru için bu süre kısadır; dikkatle okunmamış olabilir.");
+  return w;
+}
+
+/* ---------- kod ---------- */
+function b64e(s){return btoa(String.fromCharCode(...new TextEncoder().encode(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function b64d(s){s=s.replace(/-/g,"+").replace(/_/g,"/");while(s.length%4)s+="=";return new TextDecoder().decode(Uint8Array.from(atob(s),c=>c.charCodeAt(0)))}
+function pack(ans){let n=0n;for(let i=ans.length-1;i>=0;i--)n=n*5n+BigInt(ans[i]-1);return n.toString(36)}
+function unpack(s,len){let n=0n;for(const ch of s)n=n*36n+BigInt(parseInt(ch,36));const a=[];for(let i=0;i<len;i++){a.push(Number(n%5n)+1);n/=5n;}return a}
+function sum(s){let x=0;for(const ch of s)x=(x*31+ch.charCodeAt(0))%46656;return x.toString(36).padStart(3,"0")}
+function encode(o){const body=b64e(JSON.stringify(o));return "VLM3."+body+"."+sum(body)}
+function decode(code){
+  const m=code.trim().match(/^VLM3\.([A-Za-z0-9_-]+)\.([0-9a-z]{3})$/);
+  if(!m)throw new Error("Kod tanınmadı.");
+  if(sum(m[1])!==m[2])throw new Error("Kod eksik ya da değişmiş görünüyor.");
+  const o=JSON.parse(b64d(m[1]));o.ans=unpack(o.a,NA);o.scn=String(o.s||"").split("").map(Number);while(o.scn.length<NS)o.scn.push(-1);return o;
+}
+
+/* ---------- yardımcılar ---------- */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const LS="valmed-envanter-v3";
+function lsGet(){try{return JSON.parse(localStorage.getItem(LS)||"null")}catch(e){return null}}
+function lsSet(v){try{localStorage.setItem(LS,JSON.stringify(v))}catch(e){}}
+function show(id){["v-intro","v-test","v-done","v-ik"].forEach(v=>$(v).hidden=v!==id);window.scrollTo(0,0)}
+async function copyText(t,toastEl,okMsg){
+  const done=()=>{toastEl.textContent=okMsg;setTimeout(()=>{if(toastEl.textContent===okMsg)toastEl.textContent=""},2500)};
+  try{await navigator.clipboard.writeText(t);done()}catch(e){
+    const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();
+    try{document.execCommand("copy");done()}catch(_){toastEl.textContent="Kopyalanamadı; metni seçip elle kopyalayın."}ta.remove();}
+}
+function formUrl(name,code){
+  if(!FORM_LINK||FORM_LINK.indexOf("/*")===0)return null;
+  try{const u=new URL(FORM_LINK);let hasCode=false;for(const [k,v] of [...u.searchParams]){if(v==="KOD"){u.searchParams.set(k,code);hasCode=true}else if(v==="AD")u.searchParams.set(k,name)}return hasCode?u.toString():null}catch(e){return null}
+}
+$("c-pos").innerHTML='<option value="">Seçin</option>'+Object.entries(POS).map(([k,p])=>`<option value="${k}">${esc(p.n)}</option>`).join("")+'<option value="diger">Diğer</option>';
+
+/* ---------- aday akışı ---------- */
+let st={name:"",pos:"",ans:Array(NA).fill(0),scn:Array(NS).fill(-1),page:0,start:0};
+const saved=lsGet();
+if(saved&&saved.ans&&saved.ans.length===NA){st=saved;$("c-name").value=st.name;$("c-pos").value=st.pos;$("c-ok").checked=true;$("b-start").textContent=st.done?"Gönderim sayfasına git":"Kaldığım yerden devam et";}
+$("b-start").addEventListener("click",()=>{
+  const n=$("c-name").value.trim(),p=$("c-pos").value,e=$("e-intro");
+  if(!n){e.textContent="Adınızı ve soyadınızı yazın.";return}
+  if(!p){e.textContent="Başvurduğunuz pozisyonu seçin.";return}
+  if(!$("c-ok").checked){e.textContent="Devam etmek için bilgilendirmeyi onaylayın.";return}
+  e.textContent="";st.name=n;st.pos=p;if(!st.start)st.start=Date.now();lsSet(st);
+  if(st.done){finish();return}
+  show("v-test");renderPage();
+});
+["c-name","c-pos","c-ok"].forEach(id=>$(id).addEventListener("input",()=>$("e-intro").textContent=""));
+function renderPage(){
+  let h="";
+  if(st.page<LIKERT_PAGES){
+    $("p-help").textContent="Her ifade için sizi en iyi anlatan seçeneği işaretleyin. İlk aklınıza gelen cevap genellikle en doğrusudur.";
+    const s=st.page*10;
+    for(let i=s;i<Math.min(s+10,NA);i++){
+      h+=`<div class="q" id="q${i}"><div class="qt"><span class="qn">${i+1}</span><span>${esc(ITEMS[i][0])}</span></div><div class="opts" role="radiogroup" aria-label="${esc(ITEMS[i][0])}">`+
+        CHOICES.map((c,j)=>`<label class="opt"><input type="radio" name="a${i}" value="${j+1}" ${st.ans[i]===j+1?"checked":""}><span>${c}</span></label>`).join("")+`</div></div>`;
+    }
+  }else{
+    $("p-help").textContent="Aşağıdaki iş durumlarında gerçekten nasıl davranacağınızı en iyi anlatan seçeneği işaretleyin.";
+    SCN.forEach((sc,i)=>{
+      h+=`<div class="q" id="s${i}"><div class="qt"><span class="qn">D${i+1}</span><span>${esc(sc.t)}</span></div><div class="sopts" role="radiogroup" aria-label="Durum ${i+1}">`+
+        sc.o.map((o,j)=>`<label class="sopt"><input type="radio" name="s${i}" value="${j}" ${st.scn[i]===j?"checked":""}><span>${esc(o[0])}</span></label>`).join("")+`</div></div>`;
+    });
+  }
+  $("qs").innerHTML=h;$("e-test").textContent="";
+  $("b-prev").disabled=st.page===0;$("b-next").textContent=st.page===LAST?"Bitir":"İleri";
+  updateProgress();
+}
+function updateProgress(){const n=st.ans.filter(Boolean).length+st.scn.filter(x=>x>=0).length;$("p-page").textContent=`Sayfa ${st.page+1} / ${LAST+1}`;$("p-count").textContent=`${n} / ${NA+NS} cevaplandı`;$("p-bar").style.width=(n/(NA+NS)*100)+"%"}
+$("qs").addEventListener("change",e=>{
+  let m=e.target.name&&e.target.name.match(/^a(\d+)$/);
+  if(m){const i=+m[1];st.ans[i]=+e.target.value;$("q"+i).classList.remove("missing")}
+  m=e.target.name&&e.target.name.match(/^s(\d+)$/);
+  if(m){const i=+m[1];st.scn[i]=+e.target.value;$("s"+i).classList.remove("missing")}
+  lsSet(st);updateProgress();if(!document.querySelector("#qs .missing"))$("e-test").textContent="";
+});
+$("b-prev").addEventListener("click",()=>{if(st.page>0){st.page--;lsSet(st);renderPage();window.scrollTo(0,0)}});
+$("b-next").addEventListener("click",()=>{
+  const miss=[];
+  if(st.page<LIKERT_PAGES){const s=st.page*10;for(let i=s;i<Math.min(s+10,NA);i++)if(!st.ans[i]){miss.push("q"+i)}}
+  else{SCN.forEach((_,i)=>{if(st.scn[i]<0)miss.push("s"+i)})}
+  if(miss.length){miss.forEach(id=>$(id).classList.add("missing"));$("e-test").textContent=`Bu sayfada cevaplanmamış ${miss.length} soru var (kırmızı ile işaretli).`;$(miss[0]).scrollIntoView({behavior:"smooth",block:"center"});return}
+  if(st.page<LAST){st.page++;lsSet(st);renderPage();window.scrollTo(0,0)}else{st.done=true;st.dur=Math.round((Date.now()-st.start)/1000);lsSet(st);finish()}
+});
+function finish(){
+  const code=encode({v:3,n:st.name,p:st.pos,d:st.dur||0,t:new Date(st.start||Date.now()).toISOString().slice(0,10),a:pack(st.ans),s:st.scn.join("")});
+  const url=formUrl(st.name,code);
+  $("d-code").textContent=code;$("d-code2").textContent=code;
+  if(url){$("d-link").href=url;$("d-form").hidden=false;$("d-codeonly").hidden=true;$("d-title").textContent="Cevaplarınızı gönderin"}
+  else{$("d-form").hidden=true;$("d-codeonly").hidden=false;$("d-title").textContent="Teşekkür ederiz"}
+  show("v-done");
+}
+$("b-copycode").addEventListener("click",()=>copyText($("d-code").textContent,$("d-toast"),"Kod kopyalandı. Şimdi e-postanıza yapıştırıp gönderebilirsiniz."));
+
+/* ---------- İK raporu ---------- */
+let current=null,OPEN=[];
+function renderReport(o,isExample,noScroll){
+  const s=score(o.ans),posKey=POS[o.p]?o.p:null;
+  const all=Object.keys(POS).map(k=>({k,...fitFor(k,s)})).sort((a,b)=>b.fit-a.fit);
+  const mine=posKey?fitFor(posKey,s):null;
+  const e=ethics(o.ans,o.scn);
+  const warns=validity(o.ans,o.d);
+  current={o,s,mine,all,e,isExample};
+  const date=o.t?o.t.split("-").reverse().join("."):"-";
+  const [ec,el]=ethChip(e);
+  let h=`<div class="card">${isExample?'<div class="example">ÖRNEK RAPOR · Gerçek bir aday değildir; yalnızca raporun görünümünü göstermek için üretildi.</div>':""}
+  <div class="rhead"><div style="display:grid;gap:6px;min-width:0"><div class="eyebrow">Kişilik envanteri raporu · IPIP-NEO kısa form + iş etiği</div><h2>${esc(o.n||"Adsız aday")}</h2>
+  <p class="muted">${esc(posKey?POS[posKey].n:"Diğer pozisyon")} · ${date} · ${o.d?Math.max(1,Math.round(o.d/60))+" dk":"süre bilinmiyor"}</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="chip ${ec}">İş etiği: ${el}</span></div></div>
+  ${mine?(()=>{const [c,l]=fitChip(mine.fit);return `<div style="text-align:right"><div class="note">Başvurduğu pozisyonla örtüşme</div><div style="font-size:34px;font-weight:500;font-variant-numeric:tabular-nums">%${mine.fit}</div><span class="chip ${c}">${l}</span></div>`})():""}</div>`;
+  if(warns.length)h+=`<div class="warnbox"><b>Geçerlilik uyarısı</b><ul class="clean">${warns.map(w=>`<li>${esc(w)}</li>`).join("")}</ul></div>`;
+  h+=`<p class="note">Puanlar 0–100 arasındadır ve adayın kendi cevaplarına dayanır. Türk çalışan normlarıyla karşılaştırılmış değildir; sonuçlar "yüksek / orta / düşük" eğilim olarak okunmalıdır.</p></div>`;
+
+  // açık pozisyonlar
+  const openFits=all.filter(x=>OPEN.includes(x.k));
+  h+=`<div class="card"><h3>Açık pozisyonlarla örtüşme</h3>`+(openFits.length?
+    `<div class="fits">`+openFits.map(x=>{const [c,l]=fitChip(x.fit);return `<div class="fit ${x.k===posKey?"me":""}"><span>${esc(POS[x.k].n)}${x.k===posKey?" · başvurduğu":""}</span><div class="bar"><i style="width:${x.fit}%;background:var(--${c})"></i></div><b>%${x.fit}</b></div>`}).join("")+`</div>`:
+    `<p class="note">Açık pozisyon seçilmedi. Panelin altındaki "Şu an açık pozisyonlar" bölümünden seçebilirsiniz.</p>`)+
+    `<p class="note">Karakterine en yakın profiller: ${all.slice(0,3).map(x=>`<b style="font-weight:500">${esc(POS[x.k].n)}</b> (%${x.fit})`).join(", ")}.</p></div>`;
+
+  // boyutlar
+  h+=`<div class="card"><h3>Karakter özellikleri: beş temel boyut</h3>`;
+  for(const d of ORDER){const p=s.dp[d],lv=level(p);
+    h+=`<div class="dom"><div class="domtop"><b style="font-weight:500">${DOM[d].name}</b><span class="chip ${lv}">${LV[lv]} · ${p}</span></div>
+    <div class="bar"><i style="width:${p}%"></i></div><div class="scale"><span>${DOM[d].ends[0]}</span><span>${DOM[d].ends[1]}</span></div>
+    <p>${DOM[d][lv]}</p><div class="facets">`+
+    [1,2,3,4,5,6].filter(i=>(d+i) in s.fp).map(i=>{const k=d+i,fp=s.fp[k];return `<div class="fac" title="${esc(FAC[k][1])}"><span>${FAC[k][0]}</span><div class="bar"><i style="width:${fp}%"></i></div><b>${fp}</b></div>`}).join("")+`</div></div>`;}
+  h+=`</div>`;
+
+  // etik
+  h+=`<div class="card"><div class="domtop"><h3>İş etiği ve dürüstlük</h3><span class="chip ${ec}">${el}</span></div>
+  <div class="grid2"><div style="display:grid;gap:6px"><span class="note">Etik ifadeler (10 ifade)</span><div class="bar"><i style="width:${e.pct}%"></i></div><b style="font-weight:500">${e.pct} / 100</b></div>
+  <div style="display:grid;gap:6px"><span class="note">İş durumları (4 senaryo)</span><div class="bar"><i style="width:${e.spct??0}%"></i></div><b style="font-weight:500">${e.spct??"-"} / 100</b></div></div>`;
+  if(e.risk.length)h+=`<div class="warnbox"><b>Dikkat çeken cevaplar</b><ul class="clean">${e.risk.map(r=>`<li>"${esc(r.t)}" ifadesine <b style="font-weight:500">${CHOICES[r.v-1].toLowerCase()}</b> dedi.</li>`).join("")}</ul></div>`;
+  h+=SCN.map((sc,i)=>{const c=o.scn[i];if(c<0)return "";const v=sc.o[c][1];const [vc,vl]=SCNV[v];return `<div class="scnr"><b style="font-weight:500">${esc(sc.k)}</b><span class="note">${esc(sc.t)}</span><div class="ans"><span>Seçtiği: ${esc(sc.o[c][0])}</span><span class="chip ${vc}">${vl}</span></div></div>`}).join("");
+  if(e.ideal)h+=`<p class="note">Aday tüm etik ifadelerde en uç olumlu cevabı verdi. Bu ölçek kendi beyanına dayandığı için çok yüksek puanlar, olumlu izlenim bırakma isteğinden de kaynaklanabilir; senaryo cevaplarıyla birlikte değerlendirin.</p>`;
+  h+=`</div>`;
+
+  // belirgin özellikler
+  const fk=Object.keys(s.fp);const hiF=fk.filter(k=>s.fp[k]>=75).sort((a,b)=>s.fp[b]-s.fp[a]);const loF=fk.filter(k=>s.fp[k]<=25).sort((a,b)=>s.fp[a]-s.fp[b]);
+  h+=`<div class="card"><h3>Belirgin özellikler</h3><div class="grid2"><div style="display:grid;gap:8px;min-width:0"><b style="font-weight:500">Belirgin şekilde yüksek</b>${hiF.length?`<ul class="clean">${hiF.map(k=>`<li><b style="font-weight:500">${FAC[k][0]}</b> (${s.fp[k]}): ${FAC[k][1].toLowerCase()}</li>`).join("")}</ul>`:'<p class="note">75 ve üzeri alt boyut yok.</p>'}</div>
+  <div style="display:grid;gap:8px;min-width:0"><b style="font-weight:500">Belirgin şekilde düşük</b>${loF.length?`<ul class="clean">${loF.map(k=>`<li><b style="font-weight:500">${FAC[k][0]}</b> (${s.fp[k]}): ${FAC[k][1].toLowerCase()} zayıf</li>`).join("")}</ul>`:'<p class="note">25 ve altı alt boyut yok.</p>'}</div></div></div>`;
+
+  // pozisyon + sorular
+  const probes=[];
+  if(mine){
+    const ok=mine.items.filter(x=>x.x===0),gap=mine.items.filter(x=>x.x>0).sort((a,b)=>b.x-a.x);
+    const nm=x=>x.dom?DOM[x.k].name:FAC[x.k][0];
+    h+=`<div class="card"><h3>${esc(POS[posKey].n)} profiliyle karşılaştırma</h3>
+    <p class="note">Örtüşme oranı bir karar değildir; mülakatta neye odaklanılacağını gösterir.</p>
+    <div class="grid2"><div style="display:grid;gap:8px;min-width:0"><b style="font-weight:500">Profille uyumlu yönler</b>${ok.length?`<ul class="clean">${ok.map(x=>`<li>${nm(x)}: beklenen ${TGT[x.t]}, aday ${x.p}</li>`).join("")}</ul>`:'<p class="note">Profille tam örtüşen bir özellik yok.</p>'}</div>
+    <div style="display:grid;gap:8px;min-width:0"><b style="font-weight:500">Mülakatta sorgulanacak yönler</b>${gap.length?`<ul class="clean">${gap.map(x=>`<li>${nm(x)}: beklenen ${TGT[x.t]}, aday ${x.p}</li>`).join("")}</ul>`:'<p class="note">Belirgin bir fark yok.</p>'}</div></div></div>`;
+    const pk=[];gap.forEach(x=>{if(x.dom){const fs=[1,2,3,4,5,6].map(i=>x.k+i).filter(k=>k in s.fp).sort((a,b)=>x.t==="L"?s.fp[b]-s.fp[a]:s.fp[a]-s.fp[b]);pk.push(fs[0])}else pk.push(x.k)});
+    [...new Set(pk)].slice(0,4).forEach(k=>probes.push([PROBE[k],`${FAC[k][0]} · aday puanı ${s.fp[k]}`]));
+  }
+  ETH_PROBE.filter(([g])=>e.weakG.includes(g)).slice(0,2).forEach(([g,q])=>probes.push([q,`İş etiği · ${ETHG[g]}`]));
+  if(!probes.some(p=>p[1].startsWith("İş etiği")))probes.push([ETH_PROBE[1][1],"İş etiği · her adaya sorulması önerilir"]);
+  h+=`<div class="card"><h3>Mülakatta sorulabilecek sorular</h3><p class="note">Yetkinlik bazlı mülakat formundaki gibi, cevabı STAR yöntemiyle (durum, görev, davranış, sonuç) dinleyin.</p><ol class="probes">${probes.map(p=>`<li>${esc(p[0])}<small>${esc(p[1])}</small></li>`).join("")}</ol></div>`;
+
+  h+=`<div class="card"><h3>Tüm pozisyon profilleriyle örtüşme</h3><div class="fits">`+
+    all.map(x=>{const [c]=fitChip(x.fit);return `<div class="fit ${x.k===posKey?"me":""}"><span>${esc(POS[x.k].n)}${x.k===posKey?" · başvurduğu":""}</span><div class="bar"><i style="width:${x.fit}%;background:var(--${c})"></i></div><b>%${x.fit}</b></div>`}).join("")+`</div></div>`;
+
+  h+=`<div class="card"><div class="nav"><span class="toast" id="r-toast" role="status"></span><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="ghost" id="b-copyrep" type="button">Özeti kopyala</button>${isExample?"":'<button id="b-save" type="button">Aday listesine kaydet</button>'}</div></div>
+  <p class="note">Bu rapor tek başına işe alım kararında kullanılmamalıdır. Kişilik envanteri sonuçları kişisel veridir; adayın başvurusu sonuçlandıktan sonra belirlenen saklama süresi içinde silinmelidir.</p></div>`;
+  $("report").innerHTML=h;
+  $("b-copyrep").addEventListener("click",()=>copyText(summaryText(),$("r-toast"),"Özet kopyalandı."));
+  const sb=$("b-save");if(sb)sb.addEventListener("click",()=>saveCandidate(current.o,$("r-toast"),sb));
+  if(!noScroll)$("report").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function summaryText(){
+  const {o,s,mine,all,e}=current;const L=[];
+  L.push(`KİŞİLİK ENVANTERİ ÖZETİ`,`Aday: ${o.n} | Pozisyon: ${POS[o.p]?POS[o.p].n:"Diğer"} | Tarih: ${o.t||"-"}`);
+  if(mine)L.push(`Başvurduğu pozisyonla örtüşme: %${mine.fit} (${fitChip(mine.fit)[1]})`);
+  L.push(`İş etiği: ${ethChip(e)[1]} (ifadeler ${e.pct}, senaryolar ${e.spct??"-"})`);
+  L.push("");for(const d of ORDER)L.push(`${DOM[d].name}: ${s.dp[d]} (${LV[level(s.dp[d])]})`);
+  L.push("","En yakın profiller: "+all.slice(0,3).map(x=>`${POS[x.k].n} %${x.fit}`).join(", "));
+  L.push("","Not: Sonuç tek başına karar aracı değildir.");return L.join("\n");
+}
+
+/* ---------- İK: kodları oku (tek ya da toplu) ---------- */
+let batchList=[];
+$("b-report").addEventListener("click",()=>{
+  const e=$("e-ik");e.textContent="";$("batch").innerHTML="";
+  const found=($("i-code").value.match(/VLM3\.[A-Za-z0-9_-]+\.[0-9a-z]{3}/g)||[]);
+  if(!found.length){e.textContent=$("i-code").value.trim()?"Geçerli bir kod bulunamadı. Kodun VLM3. ile başladığından ve tamamının kopyalandığından emin olun.":"Önce kodları yapıştırın.";return}
+  batchList=[];let bad=0;
+  for(const c of [...new Set(found)]){try{batchList.push(decode(c))}catch(err){bad++}}
+  if(bad)e.textContent=`${bad} kod okunamadı (eksik ya da değişmiş). Diğerleri aşağıda.`;
+  if(batchList.length===1){renderReport(batchList[0],false);return}
+  $("batch").innerHTML=`<div class="tablewrap"><table><thead><tr><th>Aday</th><th>Pozisyon</th><th>Tarih</th><th></th></tr></thead><tbody>`+
+    batchList.map((o,i)=>`<tr><td>${esc(o.n)}</td><td>${esc(POS[o.p]?POS[o.p].n:"Diğer")}</td><td class="num">${esc((o.t||"").split("-").reverse().join("."))}</td><td><button class="small ghost" data-b="${i}" type="button">Raporu aç</button></td></tr>`).join("")+
+    `</tbody></table></div><div class="nav"><span class="toast" id="b-toast" role="status"></span><button id="b-saveall" type="button">Hepsini aday listesine kaydet</button></div>`;
+  $("b-saveall").addEventListener("click",async()=>{const b=$("b-saveall");b.disabled=true;let ok=0;for(const o of batchList){if(await saveCandidate(o,null,null))ok++}$("b-toast").textContent=`${ok} aday kaydedildi.`});
+});
+$("batch").addEventListener("click",ev=>{const i=ev.target.dataset.b;if(i!=null)renderReport(batchList[+i],false)});
+$("i-code").addEventListener("input",()=>$("e-ik").textContent="");
+$("b-sample").addEventListener("click",()=>renderReport(sampleCandidate(),true));
+function sampleCandidate(){
+  let seed=7;const rnd=()=>{seed=(seed*9301+49297)%233280;return seed/233280};
+  const bias={C:1.2,N:-1,E:0.3,A:0.6,O:0};
+  const ans=Q.map(q=>{let t=3+bias[q[2]]*(q[1]?1:-1)+(rnd()-0.5)*2.2;return Math.max(1,Math.min(5,Math.round(t)))});
+  ETH.forEach((e,j)=>{let t=3+1.3*(e[1]?1:-1)+(rnd()-0.5)*1.6;if(j===6)t=4;ans.push(Math.max(1,Math.min(5,Math.round(t))))});
+  return {n:"Örnek Aday",p:"kalite",d:690,t:"2026-11-03",ans,scn:[0,1,3,0]};
+}
+
+/* ---------- İK: aday listesi ve açık pozisyonlar (db) ---------- */
+let db=null,lastDocs=[];
+function docId(o){const tr={"ğ":"g","ü":"u","ş":"s","ö":"o","ç":"c","ı":"i"};return (o.n||"aday").toLocaleLowerCase("tr").replace(/[ğüşöçı]/g,c=>tr[c]).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40)+"-"+o.a.slice(-6)}
+async function saveCandidate(o,t,b){
+  if(!db){if(t)t.textContent="Aday listesi bu görünümde kullanılamıyor.";return false}
+  if(b)b.disabled=true;
+  try{
+    const s=score(o.ans),f=POS[o.p]?fitFor(o.p,s).fit:null,e=ethics(o.ans,o.scn);
+    await db.collection("adaylar").doc(docId(o)).set({n:o.n,p:o.p,d:o.d||0,t:o.t||"",a:o.a,s:o.scn.join(""),fit:f,eth:ethChip(e)[1],saved:Date.now()});
+    if(t)t.textContent="Aday listesine kaydedildi.";return true;
+  }catch(err){if(t)t.textContent="Kaydedilemedi. Lütfen tekrar deneyin.";if(b)b.disabled=false;return false}
+}
+function renderList(docs){
+  lastDocs=docs;
+  if(!docs.length){$("list").innerHTML='<p class="note">Henüz kaydedilmiş aday yok. Kodları rapora dönüştürüp "Aday listesine kaydet" ile ekleyin.</p>';return}
+  $("list").innerHTML=`<div class="tablewrap"><table><thead><tr><th>Aday</th><th>Pozisyon</th><th>Tarih</th><th>Örtüşme</th><th>Etik</th><th></th></tr></thead><tbody>`+
+    docs.map(d=>{const x=d.data();const c=x.fit==null?null:fitChip(x.fit);const ec=x.eth==="Güçlü"?"good":x.eth==="Riskli"?"bad":"warn";return `<tr><td>${esc(x.n)}</td><td>${esc(POS[x.p]?POS[x.p].n:"Diğer")}</td><td class="num">${esc((x.t||"").split("-").reverse().join("."))}</td><td>${c?`<span class="chip ${c[0]}">%${x.fit}</span>`:"-"}</td><td>${x.eth?`<span class="chip ${ec}">${esc(x.eth)}</span>`:"-"}</td><td style="white-space:nowrap"><button class="small ghost" data-open="${esc(d.id)}" type="button">Raporu aç</button> <button class="small ghost" data-del="${esc(d.id)}" type="button">Sil</button></td></tr>`}).join("")+`</tbody></table></div>`;
+}
+$("list").addEventListener("click",async e=>{
+  const o=e.target.dataset.open,dl=e.target.dataset.del;
+  if(o){const d=lastDocs.find(x=>x.id===o);if(d){const x=d.data();const scn=String(x.s||"").split("").map(Number);while(scn.length<NS)scn.push(-1);renderReport({...x,ans:unpack(x.a,NA),scn},false)}}
+  if(dl){const b=e.target;if(b.dataset.armed!=="1"){b.dataset.armed="1";b.textContent="Emin misiniz?";setTimeout(()=>{b.dataset.armed="";b.textContent="Sil"},3000);return}
+    try{await db.collection("adaylar").doc(dl).delete()}catch(err){b.textContent="Silinemedi"}}
+});
+function renderRoles(){
+  $("roles").innerHTML=Object.entries(POS).map(([k,p])=>`<label><input type="checkbox" value="${k}" ${OPEN.includes(k)?"checked":""} ${db?"":"disabled"}><span>${esc(p.n)}</span></label>`).join("");
+}
+$("roles").addEventListener("change",async()=>{
+  const sel=[...document.querySelectorAll("#roles input:checked")].map(x=>x.value);OPEN=sel;
+  if(current)renderReport(current.o,current.isExample,true);
+  try{await db.doc("ayarlar/acik").set({roles:sel});$("roles-toast").textContent="Açık pozisyonlar kaydedildi."}catch(e){$("roles-toast").textContent="Kaydedilemedi."}
+  setTimeout(()=>$("roles-toast").textContent="",2500);
+});
+
+/* ---------- görünüm seçimi ---------- */
+function openIK(){show("v-ik");$("t-ik").classList.remove("ghost");$("t-aday").classList.add("ghost");if(!$("report").innerHTML)renderReport(sampleCandidate(),true,true);window.scrollTo(0,0)}
+function openAday(){if(st.done)finish();else show("v-intro");$("t-aday").classList.remove("ghost");$("t-ik").classList.add("ghost")}
+$("t-ik").addEventListener("click",openIK);$("t-aday").addEventListener("click",openAday);
+renderRoles();
+(async()=>{
+  let isIK=false;
+  try{const user=await (window.claude?.use?.("user")??null);isIK=user?(await user.isOwner()||await user.canEdit()):false}catch(e){isIK=false}
+  if(!isIK)return;
+  $("tabs").hidden=false;openIK();
+  try{
+    db=await window.claude.use("db");
+    if(!db){$("list-card").hidden=true;$("roles-card").hidden=true;return}
+    renderRoles();
+    try{const r=await db.doc("ayarlar/acik").get();if(r.exists){OPEN=(r.data().roles||[]).filter(k=>POS[k]);renderRoles();if(current)renderReport(current.o,current.isExample,true)}}catch(e){}
+    const timer=setTimeout(()=>{if(!lastDocs.length)$("list").innerHTML='<p class="note">Aday listesi yüklenemedi. Sayfayı daha sonra yeniden açın.</p>'},10000);
+    db.collection("adaylar").orderBy("saved","desc").onSnapshot(snap=>{clearTimeout(timer);renderList(snap.docs)},()=>{clearTimeout(timer);$("list").innerHTML='<p class="note">Aday listesi şu an kullanılamıyor.</p>'});
+  }catch(e){$("list-card").hidden=true;$("roles-card").hidden=true}
+})();
+</script>
+
+</body></html>

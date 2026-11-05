@@ -1,0 +1,549 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Valmed Yetenek ve İngilizce Testi</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: kişilik envanteriyle aynı aile; bölüm kartları + sabit süre şeridi, İK'da rapor kâğıdı */
+:root{
+  --bg:#F4F6F8; --paper:#FFFFFF; --ink:#14232C; --muted:#5A6A73; --line:#DCE3E8;
+  --accent:#24557A; --accent-ink:#163A55; --accent-soft:#E2ECF4;
+  --good:#2E7A4A; --good-soft:#E3F2E8; --warn:#956210; --warn-soft:#FAF0DB; --bad:#A33A2F; --bad-soft:#F8E3E0;
+  --sans:"Lexend","Segoe UI",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E151B; --paper:#141E26; --ink:#E2EAF0; --muted:#93A3AE; --line:#27363F;
+  --accent:#7DB3DA; --accent-ink:#C7E0F2; --accent-soft:#1A2E3D;
+  --good:#7CC796; --good-soft:#17301F; --warn:#E5B35F; --warn-soft:#33270E; --bad:#EE8A7E; --bad-soft:#3A1C19; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E151B; --paper:#141E26; --ink:#E2EAF0; --muted:#93A3AE; --line:#27363F;
+  --accent:#7DB3DA; --accent-ink:#C7E0F2; --accent-soft:#1A2E3D;
+  --good:#7CC796; --good-soft:#17301F; --warn:#E5B35F; --warn-soft:#33270E; --bad:#EE8A7E; --bad-soft:#3A1C19; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;font-weight:300;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 64px}
+.wrap{max-width:820px;margin:0 auto;display:grid;gap:20px}
+h1,h2,h3{font-weight:500;line-height:1.2;margin:0;text-wrap:balance}
+h1{font-size:clamp(26px,4.5vw,36px);letter-spacing:-.01em} h2{font-size:21px} h3{font-size:17px}
+p{margin:0}
+b,strong{font-weight:500}
+.eyebrow{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.muted{color:var(--muted)} .note{font-size:13px;color:var(--muted)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:24px;display:grid;gap:16px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:500}
+.mark{width:28px;height:28px;border-radius:8px;background:var(--accent);display:grid;place-items:center;color:var(--paper);font-size:14px;font-weight:600}
+.tabs{display:flex;gap:6px}
+button,a.btn{font:inherit;font-size:15px;font-weight:500;border-radius:10px;padding:11px 18px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--paper);text-decoration:none;display:inline-block;text-align:center}
+button.ghost{background:transparent;color:var(--accent)}
+button.small{padding:7px 12px;font-size:13px}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,a.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.sopt:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+label.k{font-size:13px;font-weight:500}
+input[type=text],select,textarea{font:inherit;font-weight:400;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+select option{background:var(--paper);color:var(--ink)}
+textarea{font-family:var(--mono);font-size:13px;min-height:90px;resize:vertical}
+.field{display:grid;gap:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.fact{border-top:2px solid var(--accent);padding-top:8px}
+.fact b{display:block;font-size:20px} .fact span{font-size:13px;color:var(--muted)}
+.consent{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:16px;font-size:14px;display:grid;gap:10px}
+.consent label{display:flex;gap:10px;align-items:flex-start;font-weight:400}
+.consent input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent)}
+.warnbox{background:var(--warn-soft);color:var(--warn);border-radius:12px;padding:16px;font-size:14px;display:grid;gap:8px}
+.err{color:var(--bad);font-size:13px;min-height:18px}
+.secs{display:grid;gap:8px}
+.secrow{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.secrow:last-child{border-bottom:0}
+.secrow span:last-child{font-family:var(--mono);font-size:13px;color:var(--muted);white-space:nowrap}
+.timer{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;display:grid;gap:6px}
+.trow{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px}
+.clock{font-family:var(--mono);font-size:20px;font-weight:500;font-variant-numeric:tabular-nums}
+.clock.low{color:var(--bad)}
+.track{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.track i{display:block;height:100%;background:var(--accent);transition:width 1s linear}
+.q{display:grid;gap:12px;padding-block:18px;border-bottom:1px solid var(--line);-webkit-user-select:none;user-select:none}
+.q:last-child{border-bottom:0}
+.qt{font-size:17px;font-weight:400;display:flex;gap:12px}
+.qn{font-family:var(--mono);font-size:13px;color:var(--muted);min-width:30px;padding-top:3px}
+.ctx{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:15px;-webkit-user-select:none;user-select:none}
+.ctx table{width:100%;border-collapse:collapse;font-size:14px}
+.ctx th,.ctx td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+.ctx th:first-child,.ctx td:first-child{text-align:left}
+.sopts{display:grid;gap:8px;padding-left:42px}
+.sopt{position:relative}
+.sopt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.sopt span{display:block;padding:11px 14px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-weight:400;transition:background .15s,border-color .15s,color .15s}
+.sopt:hover span{border-color:var(--accent)}
+.sopt input:checked + span{background:var(--accent);border-color:var(--accent);color:var(--paper);font-weight:500}
+.nav{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.codebox{font-family:var(--mono);font-size:13px;word-break:break-all;background:var(--bg);border:1px dashed var(--accent);border-radius:10px;padding:14px;user-select:all}
+details summary{cursor:pointer;color:var(--muted);font-size:14px}
+.toast{font-size:13px;color:var(--good);min-height:18px}
+.rhead{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.chip{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12.5px;font-weight:500;white-space:nowrap}
+.chip.good{background:var(--good-soft);color:var(--good)} .chip.warn{background:var(--warn-soft);color:var(--warn)} .chip.bad{background:var(--bad-soft);color:var(--bad)} .chip.mid{background:var(--line);color:var(--ink)} .chip.acc{background:var(--accent-soft);color:var(--accent-ink)}
+.example{background:var(--warn-soft);color:var(--warn);border-radius:10px;padding:10px 14px;font-size:14px;font-weight:500}
+.big{font-size:38px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1}
+.stat{display:grid;gap:4px}
+.sub{display:grid;grid-template-columns:minmax(0,1fr) 150px 54px;gap:12px;align-items:center;font-size:14.5px;padding-block:6px}
+.sub .bar{height:8px}
+.sub b{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+.sub small{display:block;color:var(--muted);font-size:12px}
+.bar{height:10px;border-radius:5px;background:var(--line);position:relative;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--accent);border-radius:5px}
+.bar .tick{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--warn)}
+.cefr{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.cefr div{text-align:center;padding:8px 0;border-radius:8px;font-family:var(--mono);font-size:13px;background:var(--bg);border:1px solid var(--line);color:var(--muted)}
+.cefr div.on{background:var(--accent);border-color:var(--accent);color:var(--paper);font-weight:500}
+.cefr div.req{border:2px dashed var(--warn)}
+table.t{width:100%;border-collapse:collapse;font-size:14px}
+table.t th,table.t td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line)}
+table.t th{font-weight:500;font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.tablewrap{overflow-x:auto}
+ul.clean{margin:0;padding-left:18px;display:grid;gap:6px}
+.wrong{display:grid;gap:4px;padding-block:10px;border-top:1px solid var(--line);font-size:14px}
+.links{display:grid;gap:8px}
+.link{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;font-size:14px}
+.link code{font-family:var(--mono);font-size:12px;color:var(--muted);word-break:break-all}
+footer{font-size:12.5px;color:var(--muted);text-align:center}
+@media (max-width:640px){.grid2,.facts{grid-template-columns:1fr}.sopts{padding-left:0}.sub{grid-template-columns:minmax(0,1fr) 80px 50px}.card{padding:18px}.cefr div{font-size:11.5px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><div class="mark" aria-hidden="true">V</div><span>Valmed Pharma · İnsan Kaynakları</span></div>
+    <div class="tabs" id="tabs" hidden><button class="small" id="t-ik" type="button">İK paneli</button><button class="small ghost" id="t-aday" type="button">Aday görünümü</button></div>
+  </div>
+
+  <section id="v-intro" class="card">
+    <div class="eyebrow">İşe alım süreci</div>
+    <h1 id="i-title">Yetenek ve İngilizce Testi</h1>
+    <p id="i-lede"></p>
+    <div class="facts" id="i-facts"></div>
+    <div class="secs" id="i-secs"></div>
+    <div class="grid2">
+      <div class="field"><label class="k" for="c-name">Adınız ve soyadınız</label><input type="text" id="c-name" autocomplete="name" placeholder="Örn. Ayşe Demir"></div>
+      <div class="field"><label class="k" for="c-pos">Başvurduğunuz pozisyon</label><select id="c-pos"></select></div>
+    </div>
+    <div class="consent">
+      <b>Başlamadan önce</b>
+      <ul class="clean">
+        <li>Her bölümün kendi süresi var. Bir bölümü başlattığınızda süre işlemeye başlar ve sayfayı yenileseniz de durmaz.</li>
+        <li>Süre bitince bölüm kendiliğinden kapanır, boş bıraktığınız sorular yanlış sayılmaz ama puan da almaz.</li>
+        <li>Testi tek oturumda, sessiz bir ortamda ve kendi başınıza çözün. Başka sekmeye geçişler kaydedilir.</li>
+        <li>Hesap makinesi kullanmayın; kâğıt ve kalem kullanabilirsiniz.</li>
+      </ul>
+      <p>Cevaplarınız yalnızca Valmed Pharma İnsan Kaynakları tarafından, başvurunuzun değerlendirilmesi amacıyla kullanılır. Sonuç tek başına işe alım kararı değildir.</p>
+      <label><input type="checkbox" id="c-ok"><span>Bilgilendirmeyi okudum; cevaplarımın bu amaçla değerlendirilmesini kabul ediyorum.</span></label>
+    </div>
+    <p class="err" id="e-intro" role="alert"></p>
+    <div class="nav"><span class="note">Kesintisiz bir zaman ayırdığınızdan emin olun.</span><button id="b-start" type="button">Teste başla</button></div>
+  </section>
+
+  <section id="v-secintro" class="card" hidden>
+    <div class="eyebrow" id="si-step"></div>
+    <h2 id="si-name"></h2>
+    <p id="si-desc"></p>
+    <div class="facts"><div class="fact"><b id="si-n"></b><span>soru</span></div><div class="fact"><b id="si-min"></b><span>süre</span></div><div class="fact"><b>4</b><span>seçenek, tek doğru</span></div></div>
+    <div class="nav"><span class="note">"Bölümü başlat"a bastığınızda süre başlar.</span><button id="b-secstart" type="button">Bölümü başlat</button></div>
+  </section>
+
+  <section id="v-test" hidden>
+    <div class="timer"><div class="trow"><span id="t-sec"></span><span class="clock" id="t-clock">00:00</span></div><div class="track"><i id="t-bar" style="width:100%"></i></div><div class="trow note"><span id="t-count"></span><span>kalan süre</span></div></div>
+    <div class="card">
+      <div id="qs"></div>
+      <p class="err" id="e-test" role="alert"></p>
+      <div class="nav"><span class="note">Cevaplarınızı bölüm bitmeden değiştirebilirsiniz.</span><button id="b-secend" type="button">Bölümü bitir</button></div>
+    </div>
+  </section>
+
+  <section id="v-done" class="card" hidden>
+    <div class="eyebrow">Son adım</div>
+    <h1 id="d-title">Cevaplarınızı gönderin</h1>
+    <div id="d-form" hidden style="display:grid;gap:14px">
+      <p>Aşağıdaki düğmeye bastığınızda cevaplarınızın hazır olarak doldurulduğu bir gönderim sayfası açılır. O sayfada yalnızca <b>Gönder</b> düğmesine basmanız yeterli.</p>
+      <div><a class="btn" id="d-link" href="#" target="_blank" rel="noopener">Cevaplarımı gönder</a></div>
+      <p class="note">Gönder'e bastıktan sonra işlem tamamlanır; bu sayfayı kapatabilirsiniz. Teşekkür ederiz.</p>
+      <details><summary>Gönderim sayfası açılmazsa</summary><p class="note" style="margin:10px 0">Aşağıdaki kodu kopyalayıp bu bağlantıyı aldığınız e-postaya yanıt olarak gönderin.</p><div class="codebox" id="d-code2"></div></details>
+    </div>
+    <div id="d-codeonly" hidden style="display:grid;gap:14px">
+      <p>Testi tamamladınız. Aşağıdaki sonuç kodunu kopyalayın ve bu bağlantıyı aldığınız e-postaya yanıt olarak İnsan Kaynakları'na gönderin.</p>
+      <div class="codebox" id="d-code"></div>
+      <div class="nav"><span class="toast" id="d-toast" role="status"></span><button id="b-copycode" type="button">Kodu kopyala</button></div>
+    </div>
+  </section>
+
+  <section id="v-ik" hidden>
+    <div class="wrap" style="gap:20px">
+      <div class="card">
+        <div class="eyebrow">İK paneli · yalnızca sizin görebildiğiniz bölüm</div>
+        <h2>Adaylara göndereceğiniz bağlantılar</h2>
+        <p class="note">İki test birbirinden ayrıdır. Genel yetenek testini her adaya, İngilizce testini yalnızca dil gereken pozisyonlardaki adaylara gönderin. İkisi de gönderilen adayın iki ayrı raporu olur.</p>
+        <div class="links" id="links"></div>
+        <span class="toast" id="l-toast" role="status"></span>
+      </div>
+      <div class="card">
+        <h2>Gelen sonuçları rapora dönüştürün</h2>
+        <div class="field"><label class="k" for="i-code">Sonuç kodları</label><textarea id="i-code" placeholder="Google E-Tablo'daki kod sütununu buraya yapıştırın. Kişilik envanteri kodları da aynı sütundaysa sorun değil; bu panel yalnızca yetenek testi kodlarını (VLY ile başlayanları) okur."></textarea></div>
+        <p class="err" id="e-ik" role="alert"></p>
+        <div class="nav"><button class="ghost" id="b-sample" type="button">Örnek raporu göster</button><button id="b-report" type="button">Kodları oku</button></div>
+        <div id="batch"></div>
+      </div>
+      <div id="report"></div>
+      <div class="card" id="list-card">
+        <h2>Kaydedilen adaylar</h2>
+        <div id="list"><p class="note">Kaydedilen sonuçlar burada listelenir.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>Sorular Valmed Pharma İK için özgün olarak hazırlanmıştır. İngilizce seviyesi, Avrupa Ortak Dil Çerçevesi (CEFR) düzeylerine göre tahmin edilir.</footer>
+</div>
+
+<script>
+const FORM_LINK = "https://docs.google.com/forms/d/e/1FAIpQLScsTccQbGSRJzSzv1UYNzluGt62BbRY_MN_8aDeGqvreJA_DQ/viewform?usp=pp_url&entry.1129462381=AD&entry.1578460225=KOD";
+
+/* ---------- bölümler ---------- */
+const SEC=[
+ {k:"S",n:"Sözel Yetenek",m:"g",min:7,d:"Kelime ilişkileri, anlam ve paragraf yorumlama soruları."},
+ {k:"N",n:"Sayısal Yetenek",m:"g",min:9,d:"Yüzde, oran ve iş hayatından temel hesaplama soruları. Hesap makinesi kullanmayın."},
+ {k:"M",n:"Mantıksal Akıl Yürütme",m:"g",min:8,d:"Sayı ve harf dizileri, sıralama ve mantıksal çıkarım soruları."},
+ {k:"T",n:"Tablo ve Veri Yorumlama",m:"g",min:8,d:"Bir üretim tablosunu okuyup yorumlama soruları."},
+ {k:"G",n:"English · Grammar",m:"e",min:8,d:"Choose the option that best completes each sentence."},
+ {k:"V",n:"English · Vocabulary",m:"e",min:6,d:"Choose the word or phrase that best fits each sentence."},
+ {k:"R",n:"English · Reading",m:"e",min:10,d:"Read the texts and answer the questions."}
+];
+const MODES={genel:{keys:["S","N","M","T"],t:"Genel Yetenek Testi",lede:"Bu test, sözel, sayısal, mantıksal ve veri yorumlama becerilerinizi ölçer."},
+ ingilizce:{keys:["G","V","R"],t:"İngilizce Testi",lede:"Bu test, iş hayatında kullanılan İngilizce dil bilgisi, kelime ve okuma becerinizi ölçer."},
+ tam:{keys:["S","N","M","T","G","V","R"],t:"Yetenek ve İngilizce Testi",lede:"Bu test iki bölümden oluşur: genel yetenek (sözel, sayısal, mantıksal, veri yorumlama) ve İngilizce (dil bilgisi, kelime, okuma)."}};
+const CTX={
+ tbl:`<b>Ürün grubu bazında aylık üretim (bin adet)</b><table><thead><tr><th>Ürün grubu</th><th>Ocak</th><th>Şubat</th><th>Mart</th></tr></thead><tbody><tr><td>Efervesan tablet</td><td>120</td><td>150</td><td>180</td></tr><tr><td>Tablet</td><td>200</td><td>180</td><td>220</td></tr><tr><td>Kapsül</td><td>90</td><td>110</td><td>100</td></tr><tr><td>Toz (saşe)</td><td>40</td><td>60</td><td>50</td></tr></tbody></table>`,
+ mail:`<b>Email</b><br>Dear Ms. Kaya,<br><br>Thank you for your quotation. We would like to order 2,000 boxes of vitamin C effervescent tablets. However, we need the delivery by 15 March, as we are launching the product at a trade fair. Could you also send us the certificate of analysis for each batch?<br><br>Best regards,<br>Daniel Ross, Purchasing Manager`,
+ text:`<b>Text</b><br>Many supplement brands are moving production to contract manufacturers. Outsourcing allows them to launch products faster without investing in their own facilities. However, brands remain legally responsible for what they sell, so choosing a manufacturer with strong quality systems is critical. A cheaper partner may end up costing more if a batch fails testing and has to be recalled.`
+};
+/* [bölüm, soru, seçenekler, doğru indeks, (dil düzeyi), (bağlam)] */
+const QB=[
+ ["S","Doktor : Hastane = Öğretmen : ?",["Öğrenci","Okul","Ders","Kitap"],1],
+ ["S","Termometre : Sıcaklık = Terazi : ?",["Uzunluk","Hız","Ağırlık","Hacim"],2],
+ ["S","\"Titiz\" kelimesine anlamca en yakın olan hangisidir?",["Özenli","Hızlı","Sinirli","Cömert"],0],
+ ["S","\"Geçici\" kelimesinin zıt anlamlısı hangisidir?",["Kısa","Belirsiz","Hızlı","Kalıcı"],3],
+ ["S","Aşağıdakilerden hangisi diğerleriyle aynı grupta değildir?",["Kapsül","Etiket","Tablet","Şurup"],1],
+ ["S","Hangi cümlede yazım yanlışı vardır?",["Toplantı yarın saat onda başlayacak.","Siparişler bugün kargoya verildi.","Raporu herkez dikkatle inceledi.","Yeni ürünler rafta yerini aldı."],2],
+ ["S","\"Yeni bir üretim hattında ilk ay çıkan hataların çoğu makineden değil, talimatların yanlış anlaşılmasından kaynaklandı. Bu yüzden şirket, talimatları sadeleştirip her vardiya başında kısa bir tekrar yapmaya karar verdi.\" Paragrafa göre hataların temel nedeni nedir?",["Makine arızaları","Vardiya sayısının azlığı","Talimatların yanlış anlaşılması","Hammadde kalitesi"],2],
+ ["S","\"Tüm kalite raporları müdür tarafından imzalanır. Bu rapor müdür tarafından imzalanmamıştır.\" Buna göre hangisi kesinlikle doğrudur?",["Bu rapor bir kalite raporu değildir.","Bu rapor hatalıdır.","Müdür izindedir.","Rapor yeniden yazılacaktır."],0],
+
+ ["N","Bir ürünün fiyatı 200 TL'dir. Fiyata %15 zam yapılırsa yeni fiyat kaç TL olur?",["215","225","230","300"],2],
+ ["N","Bir makine saatte 1.200 tablet üretiyor. 8 saatlik bir vardiyada kaç tablet üretir?",["8.400","9.600","9.200","12.000"],1],
+ ["N","Bir kutuda 30 kapsül vardır. 4.500 kapsül kaç kutu eder?",["135","145","150","160"],2],
+ ["N","Maliyeti 80 TL olan bir ürün 100 TL'ye satılıyor. Satış fiyatı üzerinden kâr marjı yüzde kaçtır?",["%15","%20","%25","%80"],1],
+ ["N","Bir ekip bir işi 6 günde bitiriyor. Aynı verimle çalışan kişi sayısı iki katına çıkarılırsa iş kaç günde biter?",["2","3","4","12"],1],
+ ["N","Bir siparişin %40'ı gönderildi ve geriye 3.000 adet kaldı. Siparişin tamamı kaç adettir?",["4.000","4.200","5.000","7.500"],2],
+ ["N","1 Euro 36 TL ise 450 Euro'luk bir sipariş kaç TL eder?",["12.500","15.200","16.000","16.200"],3],
+ ["N","Bir ürünün fiyatı önce %20 indirildi, sonra indirimli fiyata %20 zam yapıldı. Son fiyat ilk fiyata göre nasıldır?",["Aynıdır","%2 düşüktür","%4 düşüktür","%4 yüksektir"],2],
+
+ ["M","Dizide soru işareti yerine ne gelmelidir?  2, 6, 12, 20, 30, ?",["36","40","42","44"],2],
+ ["M","Dizide soru işareti yerine ne gelmelidir?  3, 9, 27, 81, ?",["108","162","243","324"],2],
+ ["M","Dizide soru işareti yerine ne gelmelidir?  1, 1, 2, 3, 5, 8, ?",["11","12","13","15"],2],
+ ["M","İngiliz alfabesine göre dizide soru işareti yerine ne gelmelidir?  A, C, F, J, ?",["M","N","O","P"],2],
+ ["M","\"Tüm operatörler hijyen eğitimi almıştır. Ali bir operatördür.\" Buna göre hangisi kesinlikle doğrudur?",["Ali hijyen eğitimi vermiştir.","Ali hijyen eğitimi almıştır.","Hijyen eğitimi alan herkes operatördür.","Kesin bir şey söylenemez."],1],
+ ["M","Ayşe Burak'tan uzundur. Can da Ayşe'den uzundur. En kısa olan kimdir?",["Burak","Ayşe","Can","Belirlenemez"],0],
+ ["M","Bir ayın 3. günü Çarşamba ise aynı ayın 10. günü hangi gündür?",["Salı","Çarşamba","Perşembe","Cuma"],1],
+ ["M","Bir depoda kırmızı kutular mavilerden fazladır. Mavi kutular yeşillerden fazladır. Kutu renklerinin azdan çoğa sıralaması hangisidir?",["Mavi, yeşil, kırmızı","Yeşil, kırmızı, mavi","Yeşil, mavi, kırmızı","Mavi, kırmızı, yeşil"],2],
+
+ ["T","Mart ayında en çok hangi ürün grubundan üretim yapılmıştır?",["Efervesan tablet","Tablet","Kapsül","Toz (saşe)"],1,null,"tbl"],
+ ["T","Şubat ayının toplam üretimi kaç bin adettir?",["480","500","510","520"],1,null,"tbl"],
+ ["T","Efervesan tablet üretimi Ocak'tan Mart'a yüzde kaç artmıştır?",["%33","%40","%50","%60"],2,null,"tbl"],
+ ["T","Üç ayın toplamında kapsül üretimi kaç bin adettir?",["290","300","310","320"],1,null,"tbl"],
+ ["T","Ocak ayında tabletin toplam üretim içindeki payı yaklaşık yüzde kaçtır?",["%36","%40","%44","%50"],2,null,"tbl"],
+ ["T","Şubat'tan Mart'a üretimi azalan ürün grupları hangileridir?",["Yalnız kapsül","Yalnız toz (saşe)","Tablet ve kapsül","Kapsül ve toz (saşe)"],3,null,"tbl"],
+ ["T","Efervesan tablet üretiminin üç aylık ortalaması kaç bin adettir?",["140","150","160","180"],1,null,"tbl"],
+ ["T","Nisan'da toplam üretim Mart'a göre %10 artarsa Nisan toplamı kaç bin adet olur?",["560","600","605","610"],2,null,"tbl"],
+
+ ["G","She ___ to work by bus every day.",["go","goes","going","gone"],1,"A2"],
+ ["G","There aren't ___ chairs in the meeting room.",["some","a","much","any"],3,"A2"],
+ ["G","If it rains tomorrow, we ___ the event.",["will cancel","would cancel","cancelled","had cancelled"],0,"B1"],
+ ["G","I have worked here ___ 2023.",["for","since","from","at"],1,"B1"],
+ ["G","The report ___ by the manager yesterday.",["approved","has approved","was approved","is approving"],2,"B1"],
+ ["G","If we ___ the order earlier, we would have received it on time.",["placed","had placed","have placed","would place"],1,"B2"],
+ ["G","The client asked whether we ___ deliver by Friday.",["can","will be","could","are able"],2,"B2"],
+ ["G","Not only ___ the deadline, but they also exceeded the target.",["they met","did they meet","they did meet","met they"],1,"B2"],
+ ["G","___ the shipment been delayed, we would have lost the contract.",["If","Were","Should","Had"],3,"C1"],
+ ["G","The new supplier, ___ prices were lower, turned out to be unreliable.",["whose","which","who","that"],0,"C1"],
+
+ ["V","Please ___ the form and send it back to us.",["fill on","fill in","fill at","fill to"],1,"A2"],
+ ["V","We need to ___ a meeting with the distributor next week.",["arrange","take","put","stand"],0,"B1"],
+ ["V","We will send you the ___ for this order. Please pay within 30 days.",["brochure","invoice","contract","catalogue"],1,"B1"],
+ ["V","The price includes shipping, so there are no ___ costs.",["previous","partial","additional","opposite"],2,"B2"],
+ ["V","We have to ___ our prices to stay competitive.",["remind","reconsider","remark","retire"],1,"B2"],
+ ["V","The customer wants to ___ the order from 500 to 800 units.",["increase","rise","grow up","raise up"],0,"B2"],
+ ["V","The negotiations reached a ___, and neither side would compromise.",["deadline","headline","landmark","deadlock"],3,"C1"],
+ ["V","These contract terms are ___, so we cannot change them.",["non-negotiable","unmistakable","incomparable","unaccountable"],0,"C1"],
+
+ ["R","How many boxes does the customer want to order?",["200","1,500","2,000","20,000"],2,"A2","mail"],
+ ["R","Why does the customer need the delivery by 15 March?",["Their warehouse will close.","They are launching the product at a trade fair.","Prices will increase after that date.","Their contract ends on that date."],1,"B1","mail"],
+ ["R","What document does the customer ask for?",["An invoice","A new quotation","A certificate of analysis for each batch","A price list"],2,"B1","mail"],
+ ["R","According to the text, what is the main advantage of outsourcing production?",["Brands are no longer legally responsible.","Brands can launch products faster without building their own facilities.","Quality is always guaranteed.","Products can be sold at higher prices."],1,"B2","text"],
+ ["R","According to the text, who is legally responsible for the products?",["Only the contract manufacturer","The testing laboratory","The brand","The retailer"],2,"B2","text"],
+ ["R","What does the writer suggest about choosing the cheapest manufacturer?",["It is always the best option.","It can lead to higher costs in the end.","It is required by law.","It reduces the risk of recalls."],1,"C1","text"]
+];
+const Q=QB.map((x,i)=>({i,s:x[0],q:x[1],o:x[2],a:x[3],lv:x[4]||null,ctx:x[5]||null}));
+const LEVELS=["A1","A2","B1","B2","C1","C2"];
+const POS={
+  bd:"İş Geliştirme Uzmanı",satis:"İhracat Satış Uzmanı",lider:"Takım Lideri / Yönetici",fiyat:"Fiyatlandırma ve Raporlama Uzmanı",finans:"Finans ve Muhasebe Uzmanı",satinalma:"Satın Alma Uzmanı",pazarlama:"Pazarlama ve E-ticaret Uzmanı",ik:"İnsan Kaynakları Uzmanı",
+  kalitesor:"Kalite Sorumlusu",kalite:"Kalite Kontrol / Kalite Güvence Uzmanı",mikro:"Mikrobiyolog / Laborant",ruhsat:"Ruhsatlandırma Uzmanı",proses:"Proses Kontrol Elemanı",uretim:"Üretim Operatörü",depo:"Depo ve Lojistik Personeli"};
+/* pozisyon için kritik alt testler ve gereken İngilizce düzeyi */
+const KEY={bd:["S","T"],satis:["S","T"],lider:["S","M","T"],fiyat:["N","T"],finans:["N","T"],satinalma:["N","T"],pazarlama:["S","M"],ik:["S","M"],kalitesor:["M","T","S"],kalite:["M","T"],mikro:["M","T"],ruhsat:["S","M"],proses:["N","T"],uretim:["N","M"],depo:["N","T"]};
+const REQ={bd:"B2",satis:"B2",lider:"B2",fiyat:"B1",finans:"B1",satinalma:"B1",pazarlama:"B2",ik:"B1",kalitesor:"B1",kalite:"B1",mikro:"A2",ruhsat:"B1"};
+const EXPECT=60;
+const PROBE={
+  S:"Adaydan son işindeki bir süreci, konuyu bilmeyen birine anlatır gibi kısaca anlatmasını isteyin; açıklığına ve düzenine bakın.",
+  N:"Görüşmede kısa bir hesap isteyin: \"Maliyeti 240 TL olan bir ürünü %25 marjla satmak için satış fiyatı ne olmalı?\" (Doğru cevap: 320 TL)",
+  M:"\"Bir sorunun kök nedenini bulduğunuz bir durumu adım adım anlatın\" sorusuyla mantıksal akışını dinleyin.",
+  T:"Adaya basit bir satış veya üretim tablosu gösterip en önemli iki bulguyu söylemesini isteyin.",
+  E:"Görüşmenin 5–10 dakikasını İngilizce yapın; bu test konuşma ve dinleme becerisini ölçmez."
+};
+
+/* ---------- yardımcılar ---------- */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const secBy=k=>SEC.find(s=>s.k===k);
+const qOf=k=>Q.filter(q=>q.s===k);
+function rng(seed){let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function shuffle(arr,r){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const LS="valmed-yetenek-v1";
+/* Her test (genel / ingilizce) kendi kaydını ayrı anahtarda tutar; eski ortak kayıt kendi testinin anahtarına taşınır */
+function lsGet(m){try{let v=JSON.parse(localStorage.getItem(LS+"-"+m)||"null");if(!v){const o=JSON.parse(localStorage.getItem(LS)||"null");if(o&&o.mode===m){v=o;localStorage.setItem(LS+"-"+m,JSON.stringify(o))}}return v}catch(e){return null}}
+function lsSet(v){try{localStorage.setItem(LS+"-"+v.mode,JSON.stringify(v))}catch(e){}}
+function show(id){["v-intro","v-secintro","v-test","v-done","v-ik"].forEach(v=>$(v).hidden=v!==id);window.scrollTo(0,0)}
+async function copyText(t,el,ok){const done=()=>{el.textContent=ok;setTimeout(()=>{if(el.textContent===ok)el.textContent=""},2500)};
+  try{await navigator.clipboard.writeText(t);done()}catch(e){const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");done()}catch(_){el.textContent="Kopyalanamadı; metni seçip elle kopyalayın."}ta.remove()}}
+function mmss(s){s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+function b64e(s){return btoa(String.fromCharCode(...new TextEncoder().encode(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function b64d(s){s=s.replace(/-/g,"+").replace(/_/g,"/");while(s.length%4)s+="=";return new TextDecoder().decode(Uint8Array.from(atob(s),c=>c.charCodeAt(0)))}
+function pack(d){let n=0n;for(let i=d.length-1;i>=0;i--)n=n*5n+BigInt(d[i]);return n.toString(36)}
+function unpack(s,len){let n=0n;for(const ch of s)n=n*36n+BigInt(parseInt(ch,36));const a=[];for(let i=0;i<len;i++){a.push(Number(n%5n));n/=5n}return a}
+function sum(s){let x=0;for(const ch of s)x=(x*31+ch.charCodeAt(0))%46656;return x.toString(36).padStart(3,"0")}
+/* Kısa kod (VLY2): VLY2.<ad>.<test·pozisyon·tarih·sekme·süreler·cevaplar>.<kontrol>. Eski uzun kodlar (VLY1) okunmaya devam eder. */
+const CODE_RE=/VLY1\.[A-Za-z0-9_-]+\.[0-9a-z]{3}|VLY2\.[\p{L}\p{N}_'-]+\.[0-9a-z]+\.[0-9a-z]{3}/gu;
+const D0=Date.UTC(2026,0,1);
+const posKeys=()=>Object.keys(POS);
+function encode(o){
+  const keys=MODES[o.m].keys,qs=Q.filter(q=>keys.includes(q.s)),all=unpack(o.a,Q.length);
+  const nm=((o.n||"").trim().replace(/\s+/g,"_").replace(/[^\p{L}\p{N}_'-]/gu,"").slice(0,40))||"aday";
+  const pi=posKeys().indexOf(o.p),days=Math.max(0,Math.round((Date.parse((o.t||"2026-01-01")+"T00:00:00Z")-D0)/864e5));
+  const p=(o.m==="ingilizce"?"e":"g")+(pi<0?"z":pi.toString(36))+days.toString(36).padStart(3,"0").slice(-3)+Math.min(35,o.w||0).toString(36)
+    +keys.map(k=>Math.min(1295,Math.round((o.u||{})[k]||0)).toString(36).padStart(2,"0")).join("")+pack(qs.map(q=>all[q.i]));
+  return "VLY2."+nm+"."+p+"."+sum(nm+"."+p)}
+function decode(code){code=code.trim();
+  const m2=code.match(/^VLY2\.([\p{L}\p{N}_'-]+)\.([0-9a-z]+)\.([0-9a-z]{3})$/u);
+  if(m2){if(sum(m2[1]+"."+m2[2])!==m2[3])throw new Error("Kod eksik ya da değişmiş.");
+    const p=m2[2],mode=p[0]==="e"?"ingilizce":"genel",keys=MODES[mode].keys,qs=Q.filter(q=>keys.includes(q.s));
+    const pi=p[1]==="z"?-1:parseInt(p[1],36),t=new Date(D0+parseInt(p.slice(2,5),36)*864e5).toISOString().slice(0,10),w=parseInt(p[5],36);
+    const u={};keys.forEach((k,j)=>u[k]=parseInt(p.slice(6+2*j,8+2*j),36));
+    const sub=unpack(p.slice(6+2*keys.length),qs.length),full=Q.map(()=>4);qs.forEach((q,j)=>full[q.i]=sub[j]);
+    const o={v:2,n:m2[1].replace(/_/g," "),p:pi<0?"":(posKeys()[pi]||""),m:mode,t,u,w,a:pack(full)};o.ans=full.map(x=>x===4?null:x);return o}
+  const m=code.match(/^VLY1\.([A-Za-z0-9_-]+)\.([0-9a-z]{3})$/);if(!m)throw new Error("Kod tanınmadı.");if(sum(m[1])!==m[2])throw new Error("Kod eksik ya da değişmiş.");
+  const o=JSON.parse(b64d(m[1]));const d=unpack(o.a,Q.length);o.ans=d.map(x=>x===4?null:x);return o}
+function formUrl(name,code){try{const u=new URL(FORM_LINK);let ok=false;for(const [k,v] of [...u.searchParams]){if(v==="KOD"){u.searchParams.set(k,code);ok=true}else if(v==="AD")u.searchParams.set(k,name)}return ok?u.toString():null}catch(e){return null}}
+
+/* ---------- aday akışı ---------- */
+const hashMode=()=>{const h=(location.hash||"").replace("#","");return h==="ingilizce"?"ingilizce":"genel"};
+let st=null;
+function freshState(){return {mode:hashMode(),name:"",pos:"",seed:Math.floor(Math.random()*2**31),step:0,starts:{},used:{},ans:{},tab:0,done:false,date:new Date().toISOString().slice(0,10)}}
+st=lsGet(hashMode());if(!st||st.mode!==hashMode())st=freshState();
+const keys=()=>MODES[st.mode].keys;
+function renderIntro(){
+  const M=MODES[st.mode],ks=M.keys,tot=ks.reduce((a,k)=>a+qOf(k).length,0),min=ks.reduce((a,k)=>a+secBy(k).min,0);
+  $("i-title").textContent=M.t;$("i-lede").textContent=M.lede+" Her bölüm ayrı sürelidir.";
+  $("i-facts").innerHTML=`<div class="fact"><b>${tot}</b><span>soru</span></div><div class="fact"><b>${min} dk</b><span>toplam süre</span></div><div class="fact"><b>${ks.length}</b><span>bölüm</span></div>`;
+  $("i-secs").innerHTML=ks.map(k=>{const s=secBy(k);return `<div class="secrow"><span>${esc(s.n)}</span><span>${qOf(k).length} soru · ${s.min} dk</span></div>`}).join("");
+  $("c-name").value=st.name||"";$("c-pos").value=st.pos||"";
+  if(st.done)$("b-start").textContent="Gönderim sayfasına git";else if(Object.keys(st.starts).length)$("b-start").textContent="Kaldığım yerden devam et";
+}
+$("c-pos").innerHTML='<option value="">Seçin</option>'+Object.entries(POS).map(([k,n])=>`<option value="${k}">${esc(n)}</option>`).join("")+'<option value="diger">Diğer</option>';
+$("b-start").addEventListener("click",()=>{
+  const n=$("c-name").value.trim(),p=$("c-pos").value,e=$("e-intro");
+  if(!n){e.textContent="Adınızı ve soyadınızı yazın.";return}if(!p){e.textContent="Başvurduğunuz pozisyonu seçin.";return}if(!$("c-ok").checked){e.textContent="Devam etmek için bilgilendirmeyi onaylayın.";return}
+  e.textContent="";st.name=n;st.pos=p;lsSet(st);route();
+});
+["c-name","c-pos","c-ok"].forEach(id=>$(id).addEventListener("input",()=>$("e-intro").textContent=""));
+let timerId=null;
+function route(){
+  clearInterval(timerId);
+  if(st.done){finish();return}
+  const k=keys()[st.step];
+  if(!k){st.done=true;lsSet(st);finish();return}
+  if(st.starts[k]){if(remaining(k)<=0){closeSection(true);return}renderSection();return}
+  const s=secBy(k);
+  $("si-step").textContent=`Bölüm ${st.step+1} / ${keys().length}`;$("si-name").textContent=s.n;$("si-desc").textContent=s.d;$("si-n").textContent=qOf(k).length;$("si-min").textContent=s.min+" dk";
+  show("v-secintro");
+}
+$("b-secstart").addEventListener("click",()=>{const k=keys()[st.step];st.starts[k]=Date.now();lsSet(st);renderSection()});
+function remaining(k){return secBy(k).min*60-(Date.now()-st.starts[k])/1000}
+function renderSection(){
+  const k=keys()[st.step],s=secBy(k),r=rng(st.seed+st.step*7919);
+  const list=k==="T"||k==="R"?qOf(k):shuffle(qOf(k),r);
+  let h="",lastCtx=null,n=0;
+  for(const q of list){
+    if(q.ctx&&q.ctx!==lastCtx){h+=`<div class="ctx">${CTX[q.ctx]}</div>`;lastCtx=q.ctx}
+    const order=shuffle([0,1,2,3],rng(st.seed+q.i*104729));n++;
+    h+=`<div class="q" id="q${q.i}"><div class="qt"><span class="qn">${n}</span><span>${esc(q.q)}</span></div><div class="sopts" role="radiogroup" aria-label="Soru ${n}">`+
+      order.map(j=>`<label class="sopt"><input type="radio" name="a${q.i}" value="${j}" ${st.ans[q.i]===j?"checked":""}><span>${esc(q.o[j])}</span></label>`).join("")+`</div></div>`;
+  }
+  $("qs").innerHTML=h;$("t-sec").textContent=`Bölüm ${st.step+1} / ${keys().length} · ${s.n}`;$("e-test").textContent="";$("b-secend").textContent=st.step===keys().length-1?"Testi bitir":"Bölümü bitir";$("b-secend").dataset.armed="";
+  show("v-test");tick();timerId=setInterval(tick,1000);
+}
+function tick(){const k=keys()[st.step];if(!k||!st.starts[k])return;const s=secBy(k),rem=remaining(k);
+  $("t-clock").textContent=mmss(rem);$("t-clock").classList.toggle("low",rem<60);$("t-bar").style.width=Math.max(0,rem/(s.min*60)*100)+"%";
+  const ids=qOf(k).map(q=>q.i),a=ids.filter(i=>st.ans[i]!=null).length;$("t-count").textContent=`${a} / ${ids.length} cevaplandı`;
+  if(rem<=0)closeSection(true)}
+$("qs").addEventListener("change",e=>{const m=e.target.name&&e.target.name.match(/^a(\d+)$/);if(!m)return;st.ans[+m[1]]=+e.target.value;lsSet(st);tick()});
+$("b-secend").addEventListener("click",()=>{
+  const k=keys()[st.step],empty=qOf(k).filter(q=>st.ans[q.i]==null).length,b=$("b-secend");
+  if(empty&&b.dataset.armed!=="1"){b.dataset.armed="1";$("e-test").textContent=`${empty} soru boş. Yine de bitirmek için düğmeye tekrar basın.`;b.textContent="Evet, bitir";return}
+  closeSection(false)});
+function closeSection(timeout){
+  clearInterval(timerId);const k=keys()[st.step];
+  st.used[k]=Math.min(secBy(k).min*60,Math.round((Date.now()-st.starts[k])/1000));if(timeout)st.used[k]=secBy(k).min*60;
+  st.step++;if(st.step>=keys().length)st.done=true;lsSet(st);route()}
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&st&&!st.done&&!$("v-test").hidden){st.tab=(st.tab||0)+1;lsSet(st)}});
+function finish(){
+  const d=Q.map(q=>st.ans[q.i]==null?4:st.ans[q.i]);
+  const code=encode({v:1,n:st.name,p:st.pos,m:st.mode,t:st.date,u:st.used,w:st.tab||0,a:pack(d)});
+  const url=formUrl(st.name,code);$("d-code").textContent=code;$("d-code2").textContent=code;
+  if(url){$("d-link").href=url;$("d-form").hidden=false;$("d-codeonly").hidden=true;$("d-title").textContent="Cevaplarınızı gönderin"}else{$("d-form").hidden=true;$("d-codeonly").hidden=false;$("d-title").textContent="Teşekkür ederiz"}
+  show("v-done")}
+$("b-copycode").addEventListener("click",()=>copyText($("d-code").textContent,$("d-toast"),"Kod kopyalandı."));
+
+/* ---------- puanlama ---------- */
+function score(o){
+  const ks=MODES[o.m]?MODES[o.m].keys:MODES.tam.keys,sec={};
+  for(const k of ks){const qs=qOf(k),ans=qs.filter(q=>o.ans[q.i]!=null),cor=qs.filter(q=>o.ans[q.i]===q.a);
+    sec[k]={n:qs.length,answered:ans.length,correct:cor.length,pct:Math.round(cor.length/qs.length*100),acc:ans.length?Math.round(cor.length/ans.length*100):null,used:(o.u||{})[k]??null,min:secBy(k).min}}
+  const g=ks.filter(k=>secBy(k).m==="g"),e=ks.filter(k=>secBy(k).m==="e");
+  const tot=arr=>{if(!arr.length)return null;const n=arr.reduce((a,k)=>a+sec[k].n,0),c=arr.reduce((a,k)=>a+sec[k].correct,0);return Math.round(c/n*100)};
+  let cefr=null,byLv={};
+  if(e.length){
+    for(const lv of ["A2","B1","B2","C1"]){const qs=Q.filter(q=>q.lv===lv&&e.includes(q.s));byLv[lv]={n:qs.length,c:qs.filter(q=>o.ans[q.i]===q.a).length}}
+    let reached="A1";for(const lv of ["A2","B1","B2","C1"]){const x=byLv[lv];if(x.n&&x.c/x.n>=0.6)reached=lv;else break}
+    cefr=reached;
+  }
+  return {sec,g,e,gPct:tot(g),ePct:tot(e),cefr,byLv};
+}
+const band=p=>p>=70?["good","Yüksek"]:p>=40?["warn","Orta"]:["bad","Düşük"];
+const lvIdx=l=>LEVELS.indexOf(l);
+
+/* ---------- İK raporu ---------- */
+let current=null;
+function renderReport(o,isExample,noScroll){
+  const s=score(o),pk=POS[o.p]?o.p:null,kk=pk?KEY[pk]||[]:[],req=pk?REQ[pk]||null:null;current={o,s,isExample};
+  const date=o.t?o.t.split("-").reverse().join("."):"-";
+  const totalUsed=Object.values(o.u||{}).reduce((a,b)=>a+(b||0),0);
+  const warns=[];
+  if(o.w>0)warns.push(`Aday test sırasında ${o.w} kez başka bir sekmeye veya uygulamaya geçti.`);
+  for(const k of [...s.g,...s.e]){const x=s.sec[k];if(x.used!=null&&x.used<x.min*60*0.25&&x.answered>=x.n*0.8)warns.push(`${secBy(k).n} bölümü ${mmss(x.used)} gibi çok kısa bir sürede tamamlandı.`);if(x.answered===x.n&&x.acc!=null&&x.acc<=30)warns.push(`${secBy(k).n} bölümünde cevapların çoğu yanlış; rastgele işaretlenmiş olabilir.`)}
+  let h=`<div class="card">${isExample?'<div class="example">ÖRNEK RAPOR · Gerçek bir aday değildir; yalnızca raporun görünümünü göstermek için üretildi.</div>':""}
+  <div class="rhead"><div style="display:grid;gap:6px;min-width:0"><div class="eyebrow">${esc(MODES[o.m]?MODES[o.m].t:"Test")} raporu</div><h2>${esc(o.n||"Adsız aday")}</h2>
+  <p class="muted">${esc(pk?POS[pk]:"Diğer pozisyon")} · ${date} · toplam ${Math.round(totalUsed/60)} dk</p></div>
+  <div style="display:flex;gap:20px;flex-wrap:wrap">${s.gPct!=null?`<div class="stat"><span class="note">Genel yetenek</span><span class="big">%${s.gPct}</span><span class="chip ${band(s.gPct)[0]}">${band(s.gPct)[1]}</span></div>`:""}
+  ${s.cefr?`<div class="stat"><span class="note">İngilizce (tahmini)</span><span class="big">${s.cefr}</span><span class="chip ${req?(lvIdx(s.cefr)>=lvIdx(req)?"good":"bad"):"acc"}">${req?(lvIdx(s.cefr)>=lvIdx(req)?"Pozisyon için yeterli":"Gereken: "+req):"%"+s.ePct+" doğru"}</span></div>`:""}</div></div>`;
+  if(warns.length)h+=`<div class="warnbox"><b>Dikkat</b><ul class="clean">${warns.map(w=>`<li>${esc(w)}</li>`).join("")}</ul></div>`;
+  h+=`<p class="note">Puanlar doğru cevap yüzdesidir. Türk çalışan normlarıyla karşılaştırılmış değildir; aynı pozisyondaki adayları birbirleriyle karşılaştırmak için kullanın.</p></div>`;
+
+  if(s.g.length){
+    h+=`<div class="card"><h3>Genel yetenek alt testleri</h3>${kk.length?`<p class="note">${esc(POS[pk])} için kritik alt testler <b>yıldızla</b> işaretli; turuncu çizgi beklenen asgari düzeydir (%${EXPECT}).</p>`:""}`+
+    s.g.map(k=>{const x=s.sec[k],key=kk.includes(k),[c]=band(x.pct);return `<div class="sub"><span>${key?"★ ":""}${esc(secBy(k).n)}<small>${x.correct}/${x.n} doğru · ${x.answered} cevap · ${x.used!=null?mmss(x.used)+" / "+x.min+" dk":"süre yok"}</small></span><div class="bar"><i style="width:${x.pct}%;background:var(--${c})"></i>${key?`<span class="tick" style="left:${EXPECT}%"></span>`:""}</div><b>%${x.pct}</b></div>`}).join("");
+    const strong=s.g.filter(k=>s.sec[k].pct>=70),weak=s.g.filter(k=>s.sec[k].pct<40);
+    h+=`<div class="grid2"><div style="display:grid;gap:6px"><b>Güçlü alanlar</b>${strong.length?`<ul class="clean">${strong.map(k=>`<li>${esc(secBy(k).n)}</li>`).join("")}</ul>`:'<p class="note">%70 üzeri alt test yok.</p>'}</div><div style="display:grid;gap:6px"><b>Gelişim alanları</b>${weak.length?`<ul class="clean">${weak.map(k=>`<li>${esc(secBy(k).n)}</li>`).join("")}</ul>`:'<p class="note">%40 altı alt test yok.</p>'}</div></div></div>`;
+  }
+  if(s.e.length){
+    h+=`<div class="card"><h3>İngilizce</h3><div class="cefr">${LEVELS.map(l=>`<div class="${l===s.cefr?"on":""} ${l===req?"req":""}">${l}</div>`).join("")}</div>
+    <p class="note">Mavi kutu adayın tahmini düzeyi${req?`, kesikli çerçeve ${esc(POS[pk])} için gereken düzey (${req})`:""}. Bir düzeye ulaşmak için o düzeydeki soruların en az %60'ını ve alttaki tüm düzeyleri doğru cevaplamak gerekir.</p>`+
+    s.e.map(k=>{const x=s.sec[k],[c]=band(x.pct);return `<div class="sub"><span>${esc(secBy(k).n.replace("English · ",""))}<small>${x.correct}/${x.n} doğru · ${x.used!=null?mmss(x.used)+" / "+x.min+" dk":""}</small></span><div class="bar"><i style="width:${x.pct}%;background:var(--${c})"></i></div><b>%${x.pct}</b></div>`}).join("")+
+    `<div class="tablewrap"><table class="t"><thead><tr><th>Düzey</th><th>Doğru</th><th>Oran</th></tr></thead><tbody>${["A2","B1","B2","C1"].map(l=>{const x=s.byLv[l];return `<tr><td>${l}</td><td class="num">${x.c} / ${x.n}</td><td class="num">%${x.n?Math.round(x.c/x.n*100):0}</td></tr>`}).join("")}</tbody></table></div>
+    <p class="note">Bu test dil bilgisi, kelime ve okumayı ölçer. Konuşma ve dinleme becerisi ölçülmez.</p></div>`;
+  }
+  const probes=[];
+  s.g.filter(k=>s.sec[k].pct<EXPECT&&(kk.includes(k)||s.sec[k].pct<40)).forEach(k=>probes.push([PROBE[k],secBy(k).n+` · %${s.sec[k].pct}`]));
+  if(s.e.length)probes.push([PROBE.E,"İngilizce"+(req&&lvIdx(s.cefr)<lvIdx(req)?` · gereken ${req}, tahmini ${s.cefr}`:"")]);
+  if(probes.length)h+=`<div class="card"><h3>Mülakatta kontrol edilecekler</h3><ul class="clean">${probes.map(p=>`<li>${esc(p[0])}<br><span class="note">${esc(p[1])}</span></li>`).join("")}</ul></div>`;
+  const wrong=Q.filter(q=>(s.g.includes(q.s)||s.e.includes(q.s))&&o.ans[q.i]!==q.a);
+  h+=`<div class="card"><details><summary>Yanlış ve boş bırakılan sorular (${wrong.length})</summary>${wrong.map(q=>`<div class="wrong"><span class="note">${esc(secBy(q.s).n)}${q.lv?" · "+q.lv:""}</span><span>${esc(q.q)}</span><span>Adayın cevabı: <b>${o.ans[q.i]==null?"boş":esc(q.o[o.ans[q.i]])}</b> · Doğru: <b>${esc(q.o[q.a])}</b></span></div>`).join("")||'<p class="note">Yok.</p>'}</details></div>`;
+  h+=`<div class="card"><div class="nav"><span class="toast" id="r-toast" role="status"></span><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="ghost" id="b-copyrep" type="button">Özeti kopyala</button>${isExample?"":'<button id="b-save" type="button">Aday listesine kaydet</button>'}</div></div><p class="note">Test sonucu tek başına işe alım kararında kullanılmamalıdır. Sonuçlar kişisel veridir; başvuru sonuçlandıktan sonra saklama süresi içinde silinmelidir.</p></div>`;
+  $("report").innerHTML=h;
+  $("b-copyrep").addEventListener("click",()=>copyText(summaryText(),$("r-toast"),"Özet kopyalandı."));
+  const sb=$("b-save");if(sb)sb.addEventListener("click",()=>saveCand(current.o,$("r-toast"),sb));
+  if(!noScroll)$("report").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function summaryText(){const {o,s}=current,L=[];
+  L.push("YETENEK VE İNGİLİZCE TESTİ ÖZETİ",`Aday: ${o.n} | Pozisyon: ${POS[o.p]||"Diğer"} | Tarih: ${o.t||"-"}`);
+  if(s.gPct!=null){L.push("",`Genel yetenek: %${s.gPct} (${band(s.gPct)[1]})`);s.g.forEach(k=>L.push(`  ${secBy(k).n}: %${s.sec[k].pct}`))}
+  if(s.cefr){L.push("",`İngilizce: tahmini ${s.cefr} (%${s.ePct} doğru)${REQ[o.p]?" · gereken "+REQ[o.p]:""}`)}
+  if(o.w)L.push("",`Not: ${o.w} kez sekme değiştirildi.`);L.push("","Not: Sonuç tek başına karar aracı değildir.");return L.join("\n")}
+
+/* ---------- İK: kodlar ---------- */
+let batchList=[];
+$("b-report").addEventListener("click",()=>{
+  const e=$("e-ik");e.textContent="";$("batch").innerHTML="";const found=$("i-code").value.match(CODE_RE)||[];
+  if(!found.length){e.textContent=$("i-code").value.trim()?"Yetenek testi kodu bulunamadı. Kodların VLY ile başladığından emin olun.":"Önce kodları yapıştırın.";return}
+  batchList=[];let bad=0;for(const c of [...new Set(found)]){try{batchList.push(decode(c))}catch(err){bad++}}
+  if(bad)e.textContent=`${bad} kod okunamadı. Diğerleri aşağıda.`;
+  if(batchList.length===1){renderReport(batchList[0],false);return}
+  $("batch").innerHTML=`<div class="tablewrap"><table class="t"><thead><tr><th>Aday</th><th>Pozisyon</th><th>Test</th><th></th></tr></thead><tbody>`+batchList.map((o,i)=>`<tr><td>${esc(o.n)}</td><td>${esc(POS[o.p]||"Diğer")}</td><td>${esc(MODES[o.m]?MODES[o.m].t:"-")}</td><td><button class="small ghost" data-b="${i}" type="button">Raporu aç</button></td></tr>`).join("")+`</tbody></table></div><div class="nav"><span class="toast" id="b-toast" role="status"></span><button id="b-saveall" type="button">Hepsini aday listesine kaydet</button></div>`;
+  $("b-saveall").addEventListener("click",async()=>{$("b-saveall").disabled=true;let ok=0;for(const o of batchList)if(await saveCand(o,null,null))ok++;$("b-toast").textContent=`${ok} aday kaydedildi.`});
+});
+$("batch").addEventListener("click",ev=>{const i=ev.target.dataset.b;if(i!=null)renderReport(batchList[+i],false)});
+$("i-code").addEventListener("input",()=>$("e-ik").textContent="");
+$("b-sample").addEventListener("click",()=>renderReport(sample(),true));
+function sample(){const r=rng(11),p={S:.8,N:.55,M:.7,T:.6,G:.75,V:.6,R:.8};const ans=Q.map(q=>{const lvp=q.lv==="C1"?-.35:q.lv==="B2"?-.1:0;return r()<p[q.s]+lvp?q.a:(r()<.15?null:(q.a+1)%4)});
+  return {n:"Örnek Aday",p:"bd",m:"genel",t:"2026-11-04",u:{S:330,N:520,M:410,T:450},w:1,ans}}
+
+/* ---------- İK: liste (db) ---------- */
+let db=null,lastDocs=[];
+function docId(o){const tr={"ğ":"g","ü":"u","ş":"s","ö":"o","ç":"c","ı":"i"};return (o.n||"aday").toLocaleLowerCase("tr").replace(/[ğüşöçı]/g,c=>tr[c]).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40)+"-"+(o.a||"x").slice(-6)}
+async function saveCand(o,t,b){if(!db){if(t)t.textContent="Aday listesi bu görünümde kullanılamıyor.";return false}if(b)b.disabled=true;
+  try{const s=score(o);const a=o.a||pack(Q.map(q=>o.ans[q.i]==null?4:o.ans[q.i]));
+    await db.collection("sonuclar").doc(docId({...o,a})).set({n:o.n,p:o.p,m:o.m,t:o.t||"",u:o.u||{},w:o.w||0,a,g:s.gPct,e:s.cefr,saved:Date.now()});if(t)t.textContent="Aday listesine kaydedildi.";return true}
+  catch(err){if(t)t.textContent="Kaydedilemedi. Lütfen tekrar deneyin.";if(b)b.disabled=false;return false}}
+function renderList(docs){lastDocs=docs;
+  if(!docs.length){$("list").innerHTML='<p class="note">Henüz kaydedilmiş sonuç yok.</p>';return}
+  $("list").innerHTML=`<div class="tablewrap"><table class="t"><thead><tr><th>Aday</th><th>Pozisyon</th><th>Tarih</th><th>Test</th><th>Sonuç</th><th></th></tr></thead><tbody>`+
+  docs.map(d=>{const x=d.data(),req=REQ[x.p];return `<tr><td>${esc(x.n)}</td><td>${esc(POS[x.p]||"Diğer")}</td><td class="num">${esc((x.t||"").split("-").reverse().join("."))}</td><td>${x.m==="ingilizce"?"İngilizce":x.m==="genel"?"Genel yetenek":"Genel + İngilizce"}</td><td>${x.g!=null?`<span class="chip ${band(x.g)[0]}">%${x.g}</span> `:""}${x.e?`<span class="chip ${req?(lvIdx(x.e)>=lvIdx(req)?"good":"bad"):"acc"}">${esc(x.e)}</span>`:""}</td><td style="white-space:nowrap"><button class="small ghost" data-open="${esc(d.id)}" type="button">Raporu aç</button> <button class="small ghost" data-del="${esc(d.id)}" type="button">Sil</button></td></tr>`}).join("")+`</tbody></table></div>`}
+$("list").addEventListener("click",async e=>{const o=e.target.dataset.open,dl=e.target.dataset.del;
+  if(o){const d=lastDocs.find(x=>x.id===o);if(d){const x=d.data();renderReport({...x,ans:unpack(x.a,Q.length).map(v=>v===4?null:v)},false)}}
+  if(dl){const b=e.target;if(b.dataset.armed!=="1"){b.dataset.armed="1";b.textContent="Emin misiniz?";setTimeout(()=>{b.dataset.armed="";b.textContent="Sil"},3000);return}try{await db.collection("sonuclar").doc(dl).delete()}catch(err){b.textContent="Silinemedi"}}});
+
+/* ---------- görünüm ---------- */
+const ONLINE_URL="https://valmed-kariyer.github.io/yetenek.html";
+const linkBase=()=>location.protocol==="file:"?ONLINE_URL:location.href.split("#")[0];
+function renderLinks(){const base=linkBase();
+  $("links").innerHTML=[["genel","Genel Yetenek Testi","tüm adaylar"],["ingilizce","İngilizce Testi","yalnızca dil gereken pozisyonlar"]].map(([k,l,n])=>`<div class="link"><div style="min-width:0"><b>${l}</b> <span class="note">· ${n} · ${MODES[k].keys.reduce((a,x)=>a+secBy(x).min,0)} dk</span><br><code>${esc(base)}#${k}</code></div><button class="small ghost" data-copy="${k}" type="button">Kopyala</button></div>`).join("")}
+$("links").addEventListener("click",e=>{const k=e.target.dataset.copy;if(k)copyText(linkBase()+"#"+k,$("l-toast"),"Bağlantı kopyalandı.")});
+function openIK(){show("v-ik");$("t-ik").classList.remove("ghost");$("t-aday").classList.add("ghost");renderLinks();if(!$("report").innerHTML)renderReport(sample(),true,true)}
+function openAday(){clearInterval(timerId);renderIntro();show("v-intro");$("t-aday").classList.remove("ghost");$("t-ik").classList.add("ghost")}
+$("t-ik").addEventListener("click",openIK);$("t-aday").addEventListener("click",openAday);
+window.addEventListener("hashchange",()=>{if(hashMode()!==st.mode)location.reload()});
+renderIntro();
+if(Object.keys(st.starts).length&&!st.done&&st.name)route();else if(st.done)finish();
+/* Masaüstüne indirilen dosya (file://): İK paneli açılır, aday listesi bu bilgisayarın tarayıcısında saklanır */
+const OFFLINE=location.protocol==="file:";
+function localDb(){const K="valmed-yetenek-ik-liste",subs=[];
+  const load=()=>{try{return JSON.parse(localStorage.getItem(K)||"{}")}catch(e){return {}}};
+  const emit=()=>{const docs=Object.entries(load()).sort((a,b)=>(b[1].saved||0)-(a[1].saved||0)).map(([id,v])=>({id,data:()=>v}));subs.forEach(f=>f({docs}))};
+  const put=o=>{localStorage.setItem(K,JSON.stringify(o));emit()};
+  return {collection:()=>({doc:id=>({set:async v=>{const o=load();o[id]=v;put(o)},delete:async()=>{const o=load();delete o[id];put(o)}}),orderBy:()=>({onSnapshot:f=>{subs.push(f);emit()}})})}}
+(async()=>{
+  let isIK=OFFLINE;if(!isIK){try{const user=await (window.claude?.use?.("user")??null);isIK=user?(await user.isOwner()||await user.canEdit()):false}catch(e){}}
+  if(!isIK)return;$("tabs").hidden=false;openIK();
+  try{db=OFFLINE?localDb():await window.claude.use("db");if(!db){$("list-card").hidden=true;return}
+    const timer=setTimeout(()=>{if(!lastDocs.length)$("list").innerHTML='<p class="note">Aday listesi yüklenemedi. Sayfayı daha sonra yeniden açın.</p>'},10000);
+    db.collection("sonuclar").orderBy("saved","desc").onSnapshot(snap=>{clearTimeout(timer);renderList(snap.docs)},()=>{clearTimeout(timer);$("list").innerHTML='<p class="note">Aday listesi şu an kullanılamıyor.</p>'});
+  }catch(e){$("list-card").hidden=true}
+})();
+</script>
+
+</body></html>
